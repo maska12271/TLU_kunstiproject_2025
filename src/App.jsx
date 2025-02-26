@@ -7,7 +7,7 @@ import MainLayout from "./Pages/MainLayout.jsx";
 function App() {
 
   return (
-      <BrowserRouter>
+      <BrowserRouter basename={"/TLU_kunstiproject_2025"}>
           <Routes>
               <Route path="/" element={<MainLayout/>}>
                   {/*<Route index element={<Home />}/>*/}
