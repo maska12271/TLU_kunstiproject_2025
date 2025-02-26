@@ -1,0 +1,190 @@
+.modalBackground{
+  background: rgba(0, 0, 0, 0.25);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out forwards;
+
+  .modalWindow{
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #d9d9d9;
+    background: #fff;
+    gap: 12px;
+    border-radius: 20px;
+    align-items: center;
+
+    .closeModal{
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+
+      .closeModalButton{
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: none;
+        border: none;
+      }
+    }
+
+    .modalTitle{
+      font-weight: 400;
+      font-size: 20px;
+    }
+
+    .modalForm{
+      min-width: 320px;
+      padding: 24px;
+      gap: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .inputDiv, .selectorDiv{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .title{
+          font-size: 16px;
+          font-weight: 400;
+          color: #1E1E1E;
+        }
+
+        .subTitle{
+          font-size: 16px;
+          font-weight: 400;
+          color: #757575;
+        }
+
+        input, select{
+          padding: 14px;
+          border-radius: 8px;
+          border: 1px solid #D9D9D9;
+          font-size: 16px;
+          font-weight: 400;
+
+          &::placeholder {
+            color: #B3B3B3;
+          }
+        }
+      }
+
+      .modalSubmitButton{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 400;
+        color: #f5f5f5;
+        background: #2C2C2C;
+        border: 1px solid #2C2C2C;
+        padding: 12px;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:focus{
+          outline: #f5f5f5;
+        }
+      }
+
+      .checkboxes{
+
+        .checkboxAndTitle{
+          gap: 12px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .title{
+            font-size: 16px;
+            font-weight: 400;
+            color: #1E1E1E;
+          }
+
+          input[type="checkbox"] {
+            appearance: none; /* Removes default styling */
+            width: 16px;
+            height: 16px;
+            border: 2px solid #2c2c2c; /* Black border */
+            border-radius: 3px; /* Optional: rounded corners */
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            margin: 0;
+          }
+
+          input[type="checkbox"]:checked {
+            background-color: #2c2c2c; /* Black fill */
+            border-color: #2c2c2c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          /* Create the checkmark using ::after */
+          input[type="checkbox"]:checked::after {
+            content: "";
+            position: absolute;
+            top: 0px;
+            width: 4px;
+            height: 8px;
+            border: solid #f5f5f5;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+          }
+        }
+
+        .subTitle{
+          padding-left: 28px;
+          color: #757575;
+          font-size: 16px;
+          font-weight: 400;
+        }
+      }
+    }
+
+    .modalFormFooter{
+      font-size: 14px;
+      font-weight: 400;
+      font-style: italic;
+    }
+  }
+}
+
+.modalBackground.closing {
+  animation: fadeOutBlur 0.3s ease-out forwards;
+  /* Apply fade out animation when modal is closing */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes fadeOutBlur {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    filter: blur(5px);
+  }
+}
