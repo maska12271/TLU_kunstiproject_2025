@@ -5,7 +5,6 @@ import UnexcitingPage from "./Pages/UnexcitingPage.jsx";
 import MainLayout from "./Pages/MainLayout.jsx";
 
 function App() {
-
   return (
       <BrowserRouter basename={"/TLU_kunstiproject_2025"}>
           <Routes>
