@@ -1,4 +1,4 @@
-import config from "../Config.js";
+import config from "../config.js";
 import {Link} from "react-router-dom";
 import '/src/CSSFiles/AdminPanelPage.scss'
 import AddUserModal from "./Modals/AddUserModal.jsx";

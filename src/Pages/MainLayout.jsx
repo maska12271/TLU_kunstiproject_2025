@@ -1,4 +1,4 @@
-import config from "../Config.js";
+import config from "../config.js";
 import {Link, Outlet} from "react-router-dom";
 import '/src/CSSFiles/MainLayout.scss'
 import AdminPanelPage from "./AdminPanelPage.jsx";
