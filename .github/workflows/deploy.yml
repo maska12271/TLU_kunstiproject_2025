@@ -37,8 +37,10 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install --force
+      - name: Wait for 1 minute
+        run: sleep 60
       - name: Build
-        run: sleep 1m & npm run build
+        run: npm run build
 #      - name: Setup Pages
 #        uses: actions/configure-pages@v5
       - name: Upload artifact
