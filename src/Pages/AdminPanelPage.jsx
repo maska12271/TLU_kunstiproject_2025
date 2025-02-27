@@ -4,10 +4,14 @@ import '/src/CSSFiles/AdminPanelPage.scss'
 import AddUserModal from "./Modals/AddUserModal.jsx";
 import {useState} from "react";
 import AddProjectModal from "./Modals/AddProjectModal.jsx";
+import img from '/img.png';
+import EditUserModal from "./Modals/EditUserModal.jsx";
 
 function AdminPanelPage() {
     const [showAddUserModal, setShowAddUserModal] = useState(false)
+    const [showEditUserModal, setShowEditUserModal] = useState(false)
     const [showAddProjectModal, setShowAddProjectModal] = useState(false)
+    const [openedEditUserData, setOpenedEditUserData] = useState({})
 
     return (
         <div className={"adminPanelPage"}>
@@ -44,7 +48,7 @@ function AdminPanelPage() {
                             <td className={"showNickname"}>Näita kasutajanime</td>
                             <td className={"showPass"}>Näita parooli</td>
                             <td className={"actions"}>
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                <svg onClick={() => setShowEditUserModal(true)} width="16" height="16" viewBox="0 0 16 16" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M7.76172 2.66665H3.09505C2.74143 2.66665 2.40229 2.80713 2.15224 3.05718C1.90219 3.30723 1.76172 3.64637 1.76172 3.99999V13.3333C1.76172 13.6869 1.90219 14.0261 2.15224 14.2761C2.40229 14.5262 2.74143 14.6667 3.09505 14.6667H12.4284C12.782 14.6667 13.1211 14.5262 13.3712 14.2761C13.6212 14.0261 13.7617 13.6869 13.7617 13.3333V8.66665M12.7617 1.66665C13.0269 1.40144 13.3866 1.25244 13.7617 1.25244C14.1368 1.25244 14.4965 1.40144 14.7617 1.66665C15.0269 1.93187 15.1759 2.29158 15.1759 2.66665C15.1759 3.04173 15.0269 3.40144 14.7617 3.66665L8.42838 9.99999L5.76172 10.6667L6.42839 7.99999L12.7617 1.66665Z"
@@ -82,7 +86,7 @@ function AdminPanelPage() {
                 </div>
                 <div className="postsBody">
                     <div className={"postDiv"}>
-                        <img src="/img.png" alt="Description"/>
+                        <img src={img} alt="Description"/>
                         <div className={"postFooter"}>
                             <div className={"titleAndSubtitle"}>
                                 <div className={"title"}>Postituse tiitel</div>
@@ -109,7 +113,7 @@ function AdminPanelPage() {
 
                     {/*//delete*/}
                     <div className={"postDiv"}>
-                        <img src="/img.png" alt="Description"/>
+                        <img src={img} alt="Description"/>
                         <div className={"postFooter"}>
                             <div className={"titleAndSubtitle"}>
                                 <div className={"title"}>Postituse tiitel</div>
@@ -134,7 +138,7 @@ function AdminPanelPage() {
                         </div>
                     </div>
                     <div className={"postDiv"}>
-                        <img src="/img.png" alt="Description"/>
+                        <img src={img} alt="Description"/>
                         <div className={"postFooter"}>
                             <div className={"titleAndSubtitle"}>
                                 <div className={"title"}>Postituse tiitel</div>
@@ -159,7 +163,7 @@ function AdminPanelPage() {
                         </div>
                     </div>
                     <div className={"postDiv"}>
-                        <img src="/img.png" alt="Description"/>
+                        <img src={img} alt="Description"/>
                         <div className={"postFooter"}>
                             <div className={"titleAndSubtitle"}>
                                 <div className={"title"}>Postituse tiitel</div>
@@ -184,7 +188,7 @@ function AdminPanelPage() {
                         </div>
                     </div>
                     <div className={"postDiv"}>
-                        <img src="/img.png" alt="Description"/>
+                        <img src={img} alt="Description"/>
                         <div className={"postFooter"}>
                             <div className={"titleAndSubtitle"}>
                                 <div className={"title"}>Postituse tiitel</div>
@@ -209,7 +213,7 @@ function AdminPanelPage() {
                         </div>
                     </div>
                     <div className={"postDiv"}>
-                        <img src="/img.png" alt="Description"/>
+                        <img src={img} alt="Description"/>
                         <div className={"postFooter"}>
                             <div className={"titleAndSubtitle"}>
                                 <div className={"title"}>Postituse tiitel</div>
@@ -236,6 +240,7 @@ function AdminPanelPage() {
                 </div>
             </div>
             {showAddUserModal && <AddUserModal setShowAddUserModal={setShowAddUserModal}/>}
+            {showEditUserModal && <EditUserModal setShowEditUserModal={setShowEditUserModal} userData={openedEditUserData}/>}
             {showAddProjectModal && <AddProjectModal setShowAddProjectModal={setShowAddProjectModal}/>}
         </div>
     )
