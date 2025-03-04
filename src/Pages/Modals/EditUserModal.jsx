@@ -40,14 +40,14 @@ function EditUserModal({ setShowEditUserModal }) {
                             <option value="cat">Cat</option>
                         </select>
                     </div>
-                    <div className={"selectorDiv"}>
-                        <div className={"title"}>Roll</div>
-                        <select name="projects" id="roll-select">
-                            <option value="">Kasutaja</option>
-                            <option value="dog">Dog</option>
-                            <option value="cat">Cat</option>
-                        </select>
-                    </div>
+                    {/*<div className={"selectorDiv"}>*/}
+                    {/*    <div className={"title"}>Roll</div>*/}
+                    {/*    <select name="projects" id="roll-select">*/}
+                    {/*        <option value="">Kasutaja</option>*/}
+                    {/*        <option value="dog">Dog</option>*/}
+                    {/*        <option value="cat">Cat</option>*/}
+                    {/*    </select>*/}
+                    {/*</div>*/}
                     <button className={"modalSubmitButton"}>Salvesta</button>
                 </div>
             </div>

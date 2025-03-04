@@ -32,21 +32,25 @@ function AddUserModal({ setShowAddUserModal }) {
                         <div className={"title"}>Nimi</div>
                         <input placeholder={"Nimi"}/>
                     </div>
+                    <div className={"inputDiv"}>
+                        <div className={"title"}>Email</div>
+                        <input placeholder={"Email"}/>
+                    </div>
                     <div className={"selectorDiv"}>
-                        <div className={"title"}>Osaleb projektis</div>
+                        <div className={"title"}>Osalus projektis</div>
                         <select name="projects" id="projects-select">
                             <option value="">Vali projekt</option>
                             <option value="dog">Dog</option>
                             <option value="cat">Cat</option>
                         </select>
                     </div>
-                    <div className={"checkboxes"}>
-                        <div className={"checkboxAndTitle"}>
-                            <input type={"checkbox"}/>
-                            <div className={"title"}>Admin</div>
-                        </div>
-                        <div className={"subTitle"}>Lisa kasutaja adminina</div>
-                    </div>
+                    {/*<div className={"checkboxes"}>*/}
+                    {/*    <div className={"checkboxAndTitle"}>*/}
+                    {/*        <input type={"checkbox"}/>*/}
+                    {/*        <div className={"title"}>Admin</div>*/}
+                    {/*    </div>*/}
+                    {/*    <div className={"subTitle"}>Lisa kasutaja adminina</div>*/}
+                    {/*</div>*/}
                     <button className={"modalSubmitButton"}>Lisa kasutaja</button>
                 </div>
                 <div className={"modalFormFooter"}>Saada saadud info kasutajale</div>

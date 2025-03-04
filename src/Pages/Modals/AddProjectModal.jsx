@@ -4,7 +4,7 @@ import '/src/CSSFiles/Modals.scss'
 import {useState} from "react";
 import Alert from "../Alert/Alert.jsx";
 
-function AddProjectModal({ setShowAddProjectModal }) {
+function AddProjectModal({ setShowAddProjectModal, setShowAddPostToProjectModalMainPhoto }) {
     const [closed, setClosed] = useState(false)
 
     function closeModal() {
@@ -14,10 +14,9 @@ function AddProjectModal({ setShowAddProjectModal }) {
         }, "300");
     }
 
-    function testFunction() {
-        return(
-            <Alert status={"success"} message={"all good"}/>
-        )
+    function openNextModal() {
+        setShowAddPostToProjectModalMainPhoto(true)
+        setShowAddProjectModal(false)
     }
 
     return (
@@ -44,7 +43,7 @@ function AddProjectModal({ setShowAddProjectModal }) {
                             <option value="cat">Cat</option>
                         </select>
                     </div>
-                    <button className={"modalSubmitButton"} onClick={() => testFunction()} >Lisa kasutaja</button>
+                    <button className={"modalSubmitButton"} onClick={() => openNextModal()} >Lisa kasutaja</button>
                 </div>
             </div>
         </div>

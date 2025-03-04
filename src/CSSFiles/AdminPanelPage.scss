@@ -19,19 +19,6 @@
       font-size: 32px;
     }
 
-    .usersAddButton, .postsAddButton{
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #2C2C2C;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #2C2C2C;
-      color: #F5F5F5;
-      width: fit-content;
-      cursor: pointer;
-    }
-
     .usersTable{
       border: 1px solid #ededed;
       width: 100%;

@@ -22,12 +22,12 @@ function MainLayout() {
                     </Link>
                 </div>
 
-                <div className={"sidenavPageName"}>Töölaud</div>
+                {/*<div className={"sidenavPageName"}>Töölaud</div>*/}
 
-                <div className={"sidenavProjects"}>
-                    <div className={"sidenavProjectsTitle"}>Projektid</div>
-                    <div className={"sidenavProjectsName"}>Lillede projekt</div>
-                </div>
+                {/*<div className={"sidenavProjects"}>*/}
+                {/*    <div className={"sidenavProjectsTitle"}>Projektid</div>*/}
+                {/*    <div className={"sidenavProjectsName"}>Lillede projekt</div>*/}
+                {/*</div>*/}
             </div>
             <div className={"mainContent"}>
                 <div className={"header"}>

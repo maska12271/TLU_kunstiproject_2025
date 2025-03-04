@@ -6,11 +6,13 @@ import {useState} from "react";
 import AddProjectModal from "./Modals/AddProjectModal.jsx";
 import img from '/img.png';
 import EditUserModal from "./Modals/EditUserModal.jsx";
+import AddPostToProjectModalMainPhoto from "./Modals/AddPostToProjectModalMainPhoto.jsx";
 
 function AdminPanelPage() {
     const [showAddUserModal, setShowAddUserModal] = useState(false)
     const [showEditUserModal, setShowEditUserModal] = useState(false)
     const [showAddProjectModal, setShowAddProjectModal] = useState(false)
+    const [showAddPostToProjectModalMainPhoto, setShowAddPostToProjectModalMainPhoto] = useState(false)
     const [openedEditUserData, setOpenedEditUserData] = useState({})
 
     return (
@@ -19,7 +21,7 @@ function AdminPanelPage() {
 
             <div className="users">
                 <div className="usersTitle">Kasutajad</div>
-                <button className="usersAddButton" onClick={() => setShowAddUserModal(true)}>
+                <button className="usersAddButton addButton" onClick={() => setShowAddUserModal(true)}>
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.00016 1.33325V10.6666M1.3335 5.99992H10.6668" stroke="#F5F5F5" stroke-width="1.6"
                               stroke-linecap="round" stroke-linejoin="round"/>
@@ -72,12 +74,12 @@ function AdminPanelPage() {
 
             <div className={"posts"}>
                 <div className="postsTitle">Viimased postitused</div>
-                <button className="postsAddButton" onClick={() => setShowAddProjectModal(true)}>
+                <button className="postsAddButton addButton" onClick={() => setShowAddProjectModal(true)}>
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.00016 1.33325V10.6666M1.3335 5.99992H10.6668" stroke="#F5F5F5" stroke-width="1.6"
                               stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <div className={"text"}>Lisa kasutaja</div>
+                    <div className={"text"}>Lisa postitus</div>
                 </button>
                 <div className={"postsTabsLinks"}>
                     <div className={"postsTabsLink active"}>Kõik postitused</div>
@@ -241,7 +243,8 @@ function AdminPanelPage() {
             </div>
             {showAddUserModal && <AddUserModal setShowAddUserModal={setShowAddUserModal}/>}
             {showEditUserModal && <EditUserModal setShowEditUserModal={setShowEditUserModal} userData={openedEditUserData}/>}
-            {showAddProjectModal && <AddProjectModal setShowAddProjectModal={setShowAddProjectModal}/>}
+            {showAddProjectModal && <AddProjectModal setShowAddProjectModal={setShowAddProjectModal} setShowAddPostToProjectModalMainPhoto={setShowAddPostToProjectModalMainPhoto}/>}
+            {showAddPostToProjectModalMainPhoto && <AddPostToProjectModalMainPhoto setShowAddPostToProjectModalMainPhoto={setShowAddPostToProjectModalMainPhoto} />}
         </div>
     )
 }

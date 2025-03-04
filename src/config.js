@@ -1,6 +1,9 @@
 const config = {
-    adminPageSidenavElements: [
-        {}
+    adminPageSidenavLinks: [
+        {link: "/", name: "Home"},
+        {link: "/", name: "Home"},
+        {link: "/", name: "Home"},
+        {link: "/", name: "Home"},
     ],
 };
 
