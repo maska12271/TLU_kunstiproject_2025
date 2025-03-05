@@ -12,7 +12,7 @@ export const appRouter = router({
         .where("id", "=", input)
         .executeTakeFirst();
     }),
-    getUserList: publicProcedure.query(async ({ input }) => {
+    getUserList: publicProcedure.query(async () => {
       return await db.selectFrom("User").selectAll().execute();
     }),
     createUser: publicProcedure
@@ -22,7 +22,7 @@ export const appRouter = router({
           isAdmin: z.boolean(),
         })
       )
-      .query(async ({ input }) => {
+      .mutation(async ({ input }) => {
         return await db
           .insertInto("User")
           .values({
