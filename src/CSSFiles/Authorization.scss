@@ -1,4 +1,4 @@
-.authorizationPage{
+.authorizationPage {
   display: flex;
   width: 100%;
   min-height: calc(100% - 8rem);
@@ -15,18 +15,18 @@
     gap: 0.75rem;
     align-items: center;
 
-    .pageTitle{
+    .pageTitle {
       font-size: 3rem;
       font-weight: 900;
     }
 
-    .pageSubtitle{
+    .pageSubtitle {
       font-size: 1rem;
       font-weight: 400;
     }
   }
 
-  .formCard{
+  .formCard {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,14 +36,14 @@
     border: 1px solid #ededed;
     width: 17rem;
 
-    .closePage{
+    .closePage {
       display: flex;
       justify-content: flex-end;
       width: 100%;
       position: relative;
       left: 1.5rem;
 
-      .closePageButton{
+      .closePageButton {
         cursor: pointer;
         width: 1.5rem;
         height: 1.5rem;
@@ -53,73 +53,75 @@
         background: none;
         border: none;
         text-decoration: none;
-        color: #1E1E1E;
+        color: #1e1e1e;
       }
     }
 
-    .cardTitle{
+    .cardTitle {
       font-size: 1.25rem;
       font-weight: 600;
     }
 
-    .cardForm{
+    .cardForm {
       display: flex;
       flex-direction: column;
       padding: 1.5rem 0;
       gap: 1.5rem;
       width: 100%;
 
-      .inputDiv, .selectorDiv{
+      .inputDiv,
+      .selectorDiv {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
 
-        .title{
+        .title {
           font-size: 1rem;
           font-weight: 400;
-          color: #1E1E1E;
+          color: #1e1e1e;
         }
 
-        input, select{
+        input,
+        select {
           padding: 0.875rem;
           border-radius: 0.5rem;
-          border: 1px solid #D9D9D9;
+          border: 1px solid #d9d9d9;
           font-size: 1rem;
           font-weight: 400;
 
           &::placeholder {
-            color: #B3B3B3;
+            color: #b3b3b3;
           }
         }
       }
 
-      .modalSubmitButton{
+      .modalSubmitButton {
         display: flex;
         justify-content: center;
         text-align: center;
         font-size: 1rem;
         font-weight: 400;
         color: #f5f5f5;
-        background: #2C2C2C;
-        border: 1px solid #2C2C2C;
+        background: #2c2c2c;
+        border: 1px solid #2c2c2c;
         padding: 0.75rem;
         border-radius: 0.5rem;
         cursor: pointer;
 
-        &:focus{
+        &:focus {
           outline: #f5f5f5;
         }
       }
 
-      .link{
+      .link {
         font-size: 1rem;
         font-weight: 400;
-        color: #1E1E1E;
+        color: #1e1e1e;
         text-decoration: none;
         text-align: center;
       }
 
-      .description{
+      .description {
         font-size: 1rem;
         font-weight: 400;
         color: #757575;

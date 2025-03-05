@@ -1,7 +1,7 @@
 import config from "../../config.js";
-import {Link} from "react-router-dom";
-import '/src/CSSFiles/Alert.scss'
-import {useState} from "react";
+import { Link } from "react-router-dom";
+import "/src/CSSFiles/Alert.scss";
+import { useState } from "react";
 
 function Alert({ status, message }) {
   const [closed, setClosed] = useState(false);

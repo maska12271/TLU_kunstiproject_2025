@@ -37,17 +37,17 @@
       }
     }
 
-    .modalWindowBody{
+    .modalWindowBody {
       display: flex;
       flex-direction: column;
 
-      .modalTitle{
+      .modalTitle {
         margin-bottom: 1.5rem;
         font-size: 1.25rem;
         font-weight: 600;
       }
 
-      .modalDescription{
+      .modalDescription {
         margin-bottom: 0.75rem;
         font-size: 1rem;
         font-weight: 400;
@@ -91,15 +91,15 @@
       }
     }
 
-    .modalNextButton{
+    .modalNextButton {
       display: flex;
       justify-content: center;
       text-align: center;
       font-size: 16px;
       font-weight: 400;
       color: #f5f5f5;
-      background: #2C2C2C;
-      border: 1px solid #2C2C2C;
+      background: #2c2c2c;
+      border: 1px solid #2c2c2c;
       padding: 12px;
       border-radius: 8px;
       cursor: pointer;

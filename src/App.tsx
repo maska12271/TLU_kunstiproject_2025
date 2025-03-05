@@ -3,7 +3,7 @@ import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import { useState } from "react";
 import { TRPCProvider, useTRPC } from "./utils/trpc";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AppRouter } from "../server/trpc/routes/_app.js";
+import { AppRouter } from "../server/trpc/routers/_app";
 import React from "react";
 
 import RegistrationPage from "./Pages/RegistrationPage.jsx";
@@ -45,7 +45,7 @@ export default function App() {
           url: "http://localhost:2022",
         }),
       ],
-    })
+    }),
   );
   return (
     <QueryClientProvider client={queryClient}>

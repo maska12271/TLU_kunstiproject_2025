@@ -1,7 +1,7 @@
 import config from "../../config.js";
-import {Link} from "react-router-dom";
-import '/src/CSSFiles/Modals.scss'
-import {useState} from "react";
+import { Link } from "react-router-dom";
+import "/src/CSSFiles/Modals.scss";
+import { useState } from "react";
 
 function AddUserModal({ setShowAddUserModal }) {
   const [closed, setClosed] = useState(false);
@@ -36,39 +36,37 @@ function AddUserModal({ setShowAddUserModal }) {
           </button>
         </div>
 
-                <div className={"modalTitle"}>Kasutaja lisamine</div>
-                <div className={"modalForm"}>
-                    <div className={"inputDiv"}>
-                        <div className={"title"}>Nimi</div>
-                        <input placeholder={"Nimi"}/>
-                    </div>
-                    <div className={"inputDiv"}>
-                        <div className={"title"}>Email</div>
-                        <input placeholder={"Email"}/>
-                    </div>
-                    <div className={"selectorDiv"}>
-                        <div className={"title"}>Osalus projektis</div>
-                        <select name="projects" id="projects-select">
-                            <option value="">Vali projekt</option>
-                            <option value="dog">Dog</option>
-                            <option value="cat">Cat</option>
-                        </select>
-                    </div>
-                    {/*<div className={"checkboxes"}>*/}
-                    {/*    <div className={"checkboxAndTitle"}>*/}
-                    {/*        <input type={"checkbox"}/>*/}
-                    {/*        <div className={"title"}>Admin</div>*/}
-                    {/*    </div>*/}
-                    {/*    <div className={"subTitle"}>Lisa kasutaja adminina</div>*/}
-                    {/*</div>*/}
-                    <button className={"modalSubmitButton"}>Lisa kasutaja</button>
-                </div>
-                <div className={"modalFormFooter"}>Saada saadud info kasutajale</div>
-
-            </div>
+        <div className={"modalTitle"}>Kasutaja lisamine</div>
+        <div className={"modalForm"}>
+          <div className={"inputDiv"}>
+            <div className={"title"}>Nimi</div>
+            <input placeholder={"Nimi"} />
+          </div>
+          <div className={"inputDiv"}>
+            <div className={"title"}>Email</div>
+            <input placeholder={"Email"} />
+          </div>
+          <div className={"selectorDiv"}>
+            <div className={"title"}>Osalus projektis</div>
+            <select name="projects" id="projects-select">
+              <option value="">Vali projekt</option>
+              <option value="dog">Dog</option>
+              <option value="cat">Cat</option>
+            </select>
+          </div>
+          {/*<div className={"checkboxes"}>*/}
+          {/*    <div className={"checkboxAndTitle"}>*/}
+          {/*        <input type={"checkbox"}/>*/}
+          {/*        <div className={"title"}>Admin</div>*/}
+          {/*    </div>*/}
+          {/*    <div className={"subTitle"}>Lisa kasutaja adminina</div>*/}
+          {/*</div>*/}
+          <button className={"modalSubmitButton"}>Lisa kasutaja</button>
         </div>
-    )
+        <div className={"modalFormFooter"}>Saada saadud info kasutajale</div>
+      </div>
+    </div>
+  );
 }
 
-
-export default AddUserModal
+export default AddUserModal;

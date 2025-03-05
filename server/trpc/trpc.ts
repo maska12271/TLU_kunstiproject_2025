@@ -1,6 +1,11 @@
 import { initTRPC } from "@trpc/server";
 
-const t = initTRPC.create();
+export const createContext = async () => {
+  return {};
+};
+
+export type Context = Awaited<ReturnType<typeof createContext>>;
+const t = initTRPC.context<Context>().create();
 
 export const router = t.router;
 
