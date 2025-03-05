@@ -1,6 +1,5 @@
-import config from "../config.js";
 import { Link } from "react-router-dom";
-import "/src/CSSFiles/Authorization.scss";
+import "../CSSFiles/Authorization.scss";
 import { useState } from "react";
 
 function LoginPage() {

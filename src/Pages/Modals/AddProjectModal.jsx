@@ -1,11 +1,10 @@
-import config from "../../config.js";
-import { Link } from "react-router-dom";
-import "/src/CSSFiles/Modals.scss";
+import "../../CSSFiles/Modals.scss";
 import { useState } from "react";
-import Alert from "../Alert/Alert.jsx";
 
 function AddProjectModal({
+  // eslint-disable-next-line react/prop-types
   setShowAddProjectModal,
+  // eslint-disable-next-line react/prop-types
   setShowAddPostToProjectModalMainPhoto,
 }) {
   const [closed, setClosed] = useState(false);

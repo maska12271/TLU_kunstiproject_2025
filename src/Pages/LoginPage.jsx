@@ -1,9 +1,9 @@
-import config from "../config.js";
 import { Link } from "react-router-dom";
-import "/src/CSSFiles/Authorization.scss";
+import "../CSSFiles/Authorization.scss";
 import { useState } from "react";
 
 function LoginPage() {
+  // eslint-disable-next-line no-unused-vars
   const [showAddUserModal, setShowAddUserModal] = useState(false);
 
   return (

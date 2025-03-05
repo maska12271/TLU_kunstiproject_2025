@@ -4,9 +4,10 @@ import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import eslintConfigPrettier from "eslint-config-prettier";
+import importPlugin from "eslint-plugin-import";
 
 export default [
-  { ignores: ["dist"] },
+  { ignores: ["dist", "vite.config.js"] },
   {
     files: ["**/*.{js,jsx}"],
     languageOptions: {
@@ -37,4 +38,5 @@ export default [
     },
   },
   eslintConfigPrettier,
+  importPlugin.flatConfigs.recommended,
 ];

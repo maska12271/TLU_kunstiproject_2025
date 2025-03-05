@@ -1,10 +1,8 @@
-import config from "../config.js";
-import { Link } from "react-router-dom";
-import "/src/CSSFiles/AdminPanelPage.scss";
+import "../CSSFiles/AdminPanelPage.scss";
 import AddUserModal from "./Modals/AddUserModal.jsx";
 import { useState } from "react";
 import AddProjectModal from "./Modals/AddProjectModal.jsx";
-import img from "/img.png";
+import img from "../../public/img.png";
 import EditUserModal from "./Modals/EditUserModal.jsx";
 import AddPostToProjectModalMainPhoto from "./Modals/AddPostToProjectModalMainPhoto.jsx";
 
@@ -16,7 +14,7 @@ function AdminPanelPage() {
     showAddPostToProjectModalMainPhoto,
     setShowAddPostToProjectModalMainPhoto,
   ] = useState(false);
-  const [openedEditUserData, setOpenedEditUserData] = useState({});
+  const [openedEditUserData] = useState({});
 
   return (
     <div className={"adminPanelPage"}>

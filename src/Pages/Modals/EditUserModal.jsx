@@ -1,6 +1,4 @@
-import config from "../../config.js";
-import { Link } from "react-router-dom";
-import "/src/CSSFiles/Modals.scss";
+import "../../CSSFiles/Modals.scss";
 import { useState } from "react";
 
 function EditUserModal({ setShowEditUserModal }) {

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import "/src/CSSFiles/MainLayout.scss";
+import "../CSSFiles/MainLayout.scss";
 import AdminPanelPage from "./AdminPanelPage.jsx";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useTRPC } from "../utils/trpc.js";
+import { useTRPC } from "../utils/trpc";
 
 function MainLayout() {
   const sidebarRef = React.useRef(null);

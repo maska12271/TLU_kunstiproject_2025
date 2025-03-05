@@ -1,6 +1,4 @@
-import config from "../../config.js";
-import { Link } from "react-router-dom";
-import "/src/CSSFiles/AddPostModal.scss";
+import "../../CSSFiles/AddPostModal.scss";
 import { useState } from "react";
 
 function EditUserModal({ setShowAddPostToProjectModalMainPhoto }) {
