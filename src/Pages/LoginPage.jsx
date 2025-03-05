@@ -3,7 +3,7 @@ import "../CSSFiles/Authorization.scss";
 import { useState } from "react";
 
 function LoginPage() {
-  // eslint-disable-next-line no-unused-vars
+   
   const [showAddUserModal, setShowAddUserModal] = useState(false);
 
   return (

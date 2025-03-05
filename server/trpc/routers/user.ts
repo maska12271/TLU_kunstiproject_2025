@@ -11,7 +11,7 @@ export const userRouter = router({
       .where("id", "=", input)
       .executeTakeFirst();
   }),
-  getList: publicProcedure.query(async ({ input }) => {
+  getList: publicProcedure.query(async () => {
     return await db.selectFrom("User").selectAll().execute();
   }),
   create: publicProcedure

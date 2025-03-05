@@ -1,10 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
-import { useState } from "react";
-import { TRPCProvider, useTRPC } from "./utils/trpc";
+import React, { useState } from "react";
+import { TRPCProvider } from "./utils/trpc.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AppRouter } from "../server/trpc/routers/_app";
-import React from "react";
+import { AppRouter } from "../server/trpc/routers/_app.js";
 
 import RegistrationPage from "./Pages/RegistrationPage.jsx";
 import LoginPage from "./Pages/LoginPage.jsx";
