@@ -2,7 +2,7 @@ import config from "../config.js";
 import {Link} from "react-router-dom";
 import '/src/CSSFiles/AdminPanelPage.scss'
 import AddUserModal from "./Modals/AddUserModal.jsx";
-import {useState} from "react";
+import { useState } from "react";
 import AddProjectModal from "./Modals/AddProjectModal.jsx";
 import img from '/img.png';
 import EditUserModal from "./Modals/EditUserModal.jsx";
@@ -15,9 +15,9 @@ function AdminPanelPage() {
     const [showAddPostToProjectModalMainPhoto, setShowAddPostToProjectModalMainPhoto] = useState(false)
     const [openedEditUserData, setOpenedEditUserData] = useState({})
 
-    return (
-        <div className={"adminPanelPage"}>
-            <div className="adminPanelPageTitle">Töölaud</div>
+  return (
+    <div className={"adminPanelPage"}>
+      <div className="adminPanelPageTitle">Töölaud</div>
 
             <div className="users">
                 <div className="usersTitle">Kasutajad</div>
@@ -249,4 +249,4 @@ function AdminPanelPage() {
     )
 }
 
-export default AdminPanelPage
+export default AdminPanelPage;

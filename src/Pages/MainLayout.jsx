@@ -3,24 +3,40 @@ import {Link, Outlet} from "react-router-dom";
 import '/src/CSSFiles/MainLayout.scss'
 import AdminPanelPage from "./AdminPanelPage.jsx";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useTRPC } from "../utils/trpc.js";
 
 function MainLayout() {
-    const sidebarRef = React.useRef(null);
+  const sidebarRef = React.useRef(null);
+  const trpc = useTRPC();
 
-    return (
-        <div className={"mainLayout"}>
-            <div className={"sidenav"} ref={sidebarRef} >
-                <div className={"sidenavHeader"}>
-                    <div className={"sidenavTitle"}>TLÜ x PALLAS</div>
-                    <Link className={"sidenavHeaderLink"} to={"/"}>
-                        <div className={"text"}>Mine veebilehele</div>
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M12 8.66667V12.6667C12 13.0203 11.8595 13.3594 11.6095 13.6095C11.3594 13.8595 11.0203 14 10.6667 14H3.33333C2.97971 14 2.64057 13.8595 2.39052 13.6095C2.14048 13.3594 2 13.0203 2 12.6667V5.33333C2 4.97971 2.14048 4.64057 2.39052 4.39052C2.64057 4.14048 2.97971 4 3.33333 4H7.33333M10 2H14M14 2V6M14 2L6.66667 9.33333"
-                                stroke="black" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </Link>
-                </div>
+  const usersQuery = useQuery(trpc.user.getUserList.queryOptions());
+  console.log(usersQuery.data);
+
+  return (
+    <div className={"mainLayout"}>
+      <div className={"sidenav"} ref={sidebarRef}>
+        <div className={"sidenavHeader"}>
+          <div className={"sidenavTitle"}>TLÜ x PALLAS</div>
+          <Link className={"sidenavHeaderLink"} to={"/"}>
+            <div className={"text"}>Mine veebilehele</div>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 8.66667V12.6667C12 13.0203 11.8595 13.3594 11.6095 13.6095C11.3594 13.8595 11.0203 14 10.6667 14H3.33333C2.97971 14 2.64057 13.8595 2.39052 13.6095C2.14048 13.3594 2 13.0203 2 12.6667V5.33333C2 4.97971 2.14048 4.64057 2.39052 4.39052C2.64057 4.14048 2.97971 4 3.33333 4H7.33333M10 2H14M14 2V6M14 2L6.66667 9.33333"
+                stroke="black"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+        </div>
 
                 {/*<div className={"sidenavPageName"}>Töölaud</div>*/}
 
@@ -46,4 +62,4 @@ function MainLayout() {
     )
 }
 
-export default MainLayout
+export default MainLayout;

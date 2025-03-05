@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+server/db/db.sqlite
+server/db/db.sqlite-journal
+server/prisma/migrations/*
