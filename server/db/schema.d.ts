@@ -16,10 +16,6 @@ export type Project = {
   id: string;
   name: string;
 };
-export type ProjectToUser = {
-  A: string;
-  B: string;
-};
 export type Session = {
   id: string;
   token: string;
@@ -36,9 +32,9 @@ export type User = {
    * @kyselyType("Member" | "Admin" | "SuperAdmin")
    */
   role: "Member" | "Admin" | "SuperAdmin";
+  projectId: string;
 };
 export type DB = {
-  _ProjectToUser: ProjectToUser;
   Post: Post;
   Project: Project;
   Session: Session;

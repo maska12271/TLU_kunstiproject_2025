@@ -19,9 +19,10 @@ model User {
   /// @kyselyType("Member" | "Admin" | "SuperAdmin")
   role String
 
-  posts    Post[]
-  sessions Session[]
-  Project  Project[]
+  posts     Post[]
+  sessions  Session[]
+  Project   Project   @relation(fields: [projectId], references: [id])
+  projectId String
 }
 
 model Post {

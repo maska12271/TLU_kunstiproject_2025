@@ -8,7 +8,14 @@ export const userRouter = router({
   getById: adminProcedure.input(z.string()).query(async ({ input }) => {
     return await db
       .selectFrom("User")
-      .selectAll()
+      .innerJoin("Project", "User.projectId", "Project.id")
+      .select([
+        "User.id",
+        "User.name",
+        "User.role",
+        "Project.name",
+        "Project.id",
+      ])
       .where("id", "=", input)
       .executeTakeFirst();
   }),
