@@ -11,7 +11,7 @@
     "dev": "vite",
     "dev:server": "npm run dev --workspace=server",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "preview": "vite preview",
     "prepare": "husky"
   },
