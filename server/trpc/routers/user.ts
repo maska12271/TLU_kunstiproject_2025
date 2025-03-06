@@ -1,20 +1,20 @@
 import { generateIdFromEntropySize } from "lucia";
 import { db } from "../../db";
-import { router, publicProcedure } from "../trpc";
+import { router, publicProcedure, adminProcedure } from "../trpc";
 import { z } from "zod";
 
 export const userRouter = router({
-  getById: publicProcedure.input(z.string()).query(async ({ input }) => {
+  getById: adminProcedure.input(z.string()).query(async ({ input }) => {
     return await db
       .selectFrom("User")
       .selectAll()
       .where("id", "=", input)
       .executeTakeFirst();
   }),
-  getList: publicProcedure.query(async () => {
+  getList: adminProcedure.query(async () => {
     return await db.selectFrom("User").selectAll().execute();
   }),
-  create: publicProcedure
+  create: adminProcedure
     .input(
       z.object({
         name: z.string(),
