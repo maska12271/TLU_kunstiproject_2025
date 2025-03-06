@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx index.ts --watch"
+    "dev": "tsx index.ts --watch",
+    "gen-db": "prisma migrate dev --name \"\""
   },
   "keywords": [],
   "author": "",

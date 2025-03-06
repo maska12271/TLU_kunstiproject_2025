@@ -40,8 +40,10 @@ model Project {
 }
 
 model Session {
-  id         String @id
-  expires_at Int
-  user_id    String
-  user       User   @relation(fields: [user_id], references: [id])
+  id           String @id
+  token        String
+  refreshToken String
+  expires_at   Int
+  user_id      String
+  user         User   @relation(fields: [user_id], references: [id])
 }

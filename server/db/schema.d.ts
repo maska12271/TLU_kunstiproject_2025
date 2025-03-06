@@ -22,6 +22,8 @@ export type ProjectToUser = {
 };
 export type Session = {
   id: string;
+  token: string;
+  refreshToken: string;
   expires_at: number;
   user_id: string;
 };
