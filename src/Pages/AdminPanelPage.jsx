@@ -4,9 +4,11 @@ import {useEffect, useState} from "react";
 import AddProjectModal from "./Modals/AddProjectModal.jsx";
 import img from "../../public/img.png";
 import EditUserModal from "./Modals/EditUserModal.jsx";
-import AddPostToProjectModalMainPhoto from "./Modals/AddPostToProjectModalMainPhoto.jsx";
+import AddPostToProjectModalMainImage from "./Modals/AddPostToProjectModalMainImage.jsx";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {useTRPC} from "../utils/trpc.js";
+import AddPostToProjectModalSecondaryPhotod from "./Modals/AddPostToProjectModalSecondaryImages.jsx";
+import AddPostToProjectModalSecondaryImages from "./Modals/AddPostToProjectModalSecondaryImages.jsx";
 
 function AdminPanelPage() {
     const trpc = useTRPC();
@@ -14,21 +16,31 @@ function AdminPanelPage() {
     const [showAddUserModal, setShowAddUserModal] = useState(false)
     const [showEditUserModal, setShowEditUserModal] = useState(false)
     const [showAddProjectModal, setShowAddProjectModal] = useState(false)
-    const [showAddPostToProjectModalMainPhoto, setShowAddPostToProjectModalMainPhoto] = useState(false)
+    const [showAddPostToProjectModalMainImage, setShowAddPostToProjectModalMainImage] = useState(false)
+    const [showAddPostToProjectModalSecondaryImages, setShowAddPostToProjectModalSecondaryImages] = useState(false)
     const [openedEditUserData, setOpenedEditUserData] = useState({})
     const [allUsers, setAllUsers] = useState([])
+
+    const [newPostMainImage, setNewPostMainImage] = useState("")
+    // const [allUsers, setAllUsers] = useState([])
 
     const { isPending, isError, data, error } = useQuery(trpc.user.getList.queryOptions({}));
 
     useEffect(() => {
         if (!isPending && !isError) {
             setAllUsers(data);
+        }else if(isError){
+            console.log(error)
         }
     }, [isPending, isError]);
 
     function openEditUserModal(userData){
         setOpenedEditUserData(userData);
         setShowEditUserModal(true)
+    }
+
+    function saveMainImageUrl(imgUrl){
+        setNewPostMainImage(imgUrl);
     }
 
     return (
@@ -260,10 +272,40 @@ function AdminPanelPage() {
                   </div>
               </div>
           </div>
-          {showAddUserModal && <AddUserModal setShowAddUserModal={setShowAddUserModal}/>}
-          {showEditUserModal && <EditUserModal setShowEditUserModal={setShowEditUserModal} userData={openedEditUserData}/>}
-          {showAddProjectModal && <AddProjectModal setShowAddProjectModal={setShowAddProjectModal} setShowAddPostToProjectModalMainPhoto={setShowAddPostToProjectModalMainPhoto}/>}
-          {showAddPostToProjectModalMainPhoto && <AddPostToProjectModalMainPhoto setShowAddPostToProjectModalMainPhoto={setShowAddPostToProjectModalMainPhoto} />}
+          {showAddUserModal &&
+              <AddUserModal
+                  setShowAddUserModal={setShowAddUserModal}
+              />
+          }
+
+          {showEditUserModal &&
+              <EditUserModal
+                  setShowEditUserModal={setShowEditUserModal}
+                  userData={openedEditUserData}
+              />
+          }
+
+          {showAddProjectModal &&
+              <AddProjectModal
+                  setShowAddProjectModal={setShowAddProjectModal}
+                  setShowAddPostToProjectModalMainImage={setShowAddPostToProjectModalMainImage}
+              />
+          }
+
+          {showAddPostToProjectModalMainImage &&
+              <AddPostToProjectModalMainImage
+                  setShowAddPostToProjectModalMainImage={setShowAddPostToProjectModalMainImage}
+                  setShowAddPostToProjectModalSecondaryImages={setShowAddPostToProjectModalSecondaryImages}
+                  newPostMainImage={newPostMainImage}
+                  saveMainImageUrl={saveMainImageUrl}  // Pass function as a prop
+              />
+          }
+
+          {showAddPostToProjectModalSecondaryImages &&
+              <AddPostToProjectModalSecondaryImages
+                  setShowAddPostToProjectModalSecondaryImages={setShowAddPostToProjectModalSecondaryImages}
+              />
+          }
       </div>
   )
 }

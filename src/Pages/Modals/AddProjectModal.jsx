@@ -1,12 +1,7 @@
 import "../../CSSFiles/Modals.scss";
 import { useState } from "react";
 
-function AddProjectModal({
-  // eslint-disable-next-line react/prop-types
-  setShowAddProjectModal,
-  // eslint-disable-next-line react/prop-types
-  setShowAddPostToProjectModalMainPhoto,
-}) {
+function AddProjectModal({setShowAddProjectModal, setShowAddPostToProjectModalMainImage }) {
   const [closed, setClosed] = useState(false);
 
   function closeModal() {
@@ -17,7 +12,7 @@ function AddProjectModal({
   }
 
   function openNextModal() {
-    setShowAddPostToProjectModalMainPhoto(true);
+    setShowAddPostToProjectModalMainImage(true);
     setShowAddProjectModal(false);
   }
 
@@ -61,7 +56,7 @@ function AddProjectModal({
             className={"modalSubmitButton"}
             onClick={() => openNextModal()}
           >
-            Lisa kasutaja
+            Lisama
           </button>
         </div>
       </div>

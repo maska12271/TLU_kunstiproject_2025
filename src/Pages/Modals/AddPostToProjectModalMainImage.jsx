@@ -1,25 +1,28 @@
 import "../../CSSFiles/AddPostModal.scss";
 import { useState } from "react";
 
-function EditUserModal({ setShowAddPostToProjectModalMainPhoto }) {
+function AddPostToProjectModalMainImage({
+    setShowAddPostToProjectModalMainImage,
+    setShowAddPostToProjectModalSecondaryImages,
+    newPostMainImage,
+    saveMainImageUrl
+}) {
   const [closed, setClosed] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
 
   function closeModal() {
     setClosed(true);
     setTimeout(() => {
-      setShowAddPostToProjectModalMainPhoto(false);
+      setShowAddPostToProjectModalMainImage(false);
     }, "300");
   }
 
   function openNextModal() {
-    setShowAddPostToProjectModalMainPhoto(false);
-    // setShowAddProjectModal(false)
+    setShowAddPostToProjectModalMainImage(false);
+    setShowAddPostToProjectModalSecondaryImages(true);
   }
 
   function handleChangeImg(e) {
-    console.log(e.target.files);
-    setSelectedImage(URL.createObjectURL(e.target.files[0]));
+    saveMainImageUrl(URL.createObjectURL(e.target.files[0]))
   }
 
   return (
@@ -50,8 +53,8 @@ function EditUserModal({ setShowAddPostToProjectModalMainPhoto }) {
           <div className={"modalDescription"}>Lisa peamine pilt siia</div>
           <label className={"fileUploadDiv"}>
             <input type="file" accept="image/*" onChange={handleChangeImg} />
-            {selectedImage ? (
-              <img src={selectedImage} />
+            {newPostMainImage.length > 0 ? (
+              <img src={newPostMainImage} />
             ) : (
               <>
                 <svg
@@ -83,4 +86,4 @@ function EditUserModal({ setShowAddPostToProjectModalMainPhoto }) {
   );
 }
 
-export default EditUserModal;
+export default AddPostToProjectModalMainImage;
