@@ -10,7 +10,7 @@ export type Post = {
   description: string;
   title: string;
   imageUrl: string;
-  userId: string | null;
+  authorId: string | null;
 };
 export type Project = {
   id: string;

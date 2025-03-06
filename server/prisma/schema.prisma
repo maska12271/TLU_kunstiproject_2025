@@ -30,8 +30,8 @@ model Post {
   description String
   title       String
   imageUrl    String
-  User        User?   @relation(fields: [userId], references: [id])
-  userId      String?
+  author      User?   @relation(fields: [authorId], references: [id])
+  authorId    String?
 }
 
 model Project {

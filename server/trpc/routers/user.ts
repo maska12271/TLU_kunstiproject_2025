@@ -5,20 +5,37 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 
 export const userRouter = router({
-  getById: adminProcedure.input(z.string()).query(async ({ input }) => {
-    return await db
-      .selectFrom("User")
-      .innerJoin("Project", "User.projectId", "Project.id")
-      .select([
-        "User.id",
-        "User.name",
-        "User.role",
-        "Project.name",
-        "Project.id",
-      ])
-      .where("id", "=", input)
-      .executeTakeFirst();
-  }),
+  getById: adminProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const user = await db
+        .selectFrom("User")
+        .innerJoin("Project", "User.projectId", "Project.id")
+        .select([
+          "User.id",
+          "User.name",
+          "User.role",
+          "Project.name",
+          "Project.id",
+        ])
+        .where("id", "=", input.id)
+        .executeTakeFirst();
+
+      const result = await db
+        .selectFrom("Post")
+        .where("authorId", "=", input.id)
+        .select(({ fn }) => fn.countAll().as("count"))
+        .executeTakeFirst();
+
+      return {
+        ...user,
+        postsCount: result?.count || 0,
+      };
+    }),
   getList: adminProcedure
     .input(
       z.object({
