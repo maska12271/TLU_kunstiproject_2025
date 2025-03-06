@@ -7,10 +7,6 @@ import { useTRPC } from "../utils/trpc";
 
 function MainLayout() {
   const sidebarRef = React.useRef(null);
-  const trpc = useTRPC();
-
-  const usersQuery = useQuery(trpc.user.getList.queryOptions());
-  console.log(usersQuery.data);
 
   return (
     <div className={"mainLayout"}>
@@ -37,38 +33,28 @@ function MainLayout() {
           </Link>
         </div>
 
-        {/*<div className={"sidenavPageName"}>Töölaud</div>*/}
+                {/*<div className={"sidenavPageName"}>Töölaud</div>*/}
 
-        {/*<div className={"sidenavProjects"}>*/}
-        {/*    <div className={"sidenavProjectsTitle"}>Projektid</div>*/}
-        {/*    <div className={"sidenavProjectsName"}>Lillede projekt</div>*/}
-        {/*</div>*/}
-      </div>
-      <div className={"mainContent"}>
-        <div className={"header"}>
-          <Link className={"myAccount"} to={"/"}>
-            <svg
-              width="16"
-              height="17"
-              viewBox="0 0 16 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M14.6663 16V14.3333C14.6663 13.4493 14.3152 12.6014 13.69 11.9763C13.0649 11.3512 12.2171 11 11.333 11H4.66634C3.78229 11 2.93444 11.3512 2.30932 11.9763C1.6842 12.6014 1.33301 13.4493 1.33301 14.3333V16M11.333 4.33333C11.333 6.17428 9.84062 7.66667 7.99967 7.66667C6.15873 7.66667 4.66634 6.17428 4.66634 4.33333C4.66634 2.49238 6.15873 1 7.99967 1C9.84062 1 11.333 2.49238 11.333 4.33333Z"
-                stroke="black"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <div className={"text"}>Minu kasutaja</div>
-          </Link>
+                {/*<div className={"sidenavProjects"}>*/}
+                {/*    <div className={"sidenavProjectsTitle"}>Projektid</div>*/}
+                {/*    <div className={"sidenavProjectsName"}>Lillede projekt</div>*/}
+                {/*</div>*/}
+            </div>
+            <div className={"mainContent"}>
+                <div className={"header"}>
+                    <Link className={"myAccount"} to={"/"}>
+                        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M14.6663 16V14.3333C14.6663 13.4493 14.3152 12.6014 13.69 11.9763C13.0649 11.3512 12.2171 11 11.333 11H4.66634C3.78229 11 2.93444 11.3512 2.30932 11.9763C1.6842 12.6014 1.33301 13.4493 1.33301 14.3333V16M11.333 4.33333C11.333 6.17428 9.84062 7.66667 7.99967 7.66667C6.15873 7.66667 4.66634 6.17428 4.66634 4.33333C4.66634 2.49238 6.15873 1 7.99967 1C9.84062 1 11.333 2.49238 11.333 4.33333Z"
+                                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div className={"text"}>Minu kasutaja</div>
+                    </Link>
+                </div>
+                <AdminPanelPage/>
+            </div>
         </div>
-        <AdminPanelPage />
-      </div>
-    </div>
-  );
+    )
 }
 
 export default MainLayout;

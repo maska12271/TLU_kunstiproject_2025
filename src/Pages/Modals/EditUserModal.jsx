@@ -1,8 +1,8 @@
 import "../../CSSFiles/Modals.scss";
 import { useState } from "react";
 
-function EditUserModal({ setShowEditUserModal }) {
-  const [closed, setClosed] = useState(false);
+function EditUserModal({ setShowEditUserModal, userData }) {
+    const [closed, setClosed] = useState(false)
 
   function closeModal() {
     setClosed(true);
@@ -34,33 +34,32 @@ function EditUserModal({ setShowEditUserModal }) {
           </button>
         </div>
 
-        <div className={"modalTitle"}>Kasutaja andmete muutmine</div>
-        <div className={"modalForm"}>
-          <div className={"inputDiv"}>
-            <div className={"title"}>Nimi</div>
-            <input placeholder={"Nimi"} />
-          </div>
-          <div className={"selectorDiv"}>
-            <div className={"title"}>Osaleb projektis</div>
-            <select name="projects" id="projects-select">
-              <option value="">Vali projekt</option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-            </select>
-          </div>
-          {/*<div className={"selectorDiv"}>*/}
-          {/*    <div className={"title"}>Roll</div>*/}
-          {/*    <select name="projects" id="roll-select">*/}
-          {/*        <option value="">Kasutaja</option>*/}
-          {/*        <option value="dog">Dog</option>*/}
-          {/*        <option value="cat">Cat</option>*/}
-          {/*    </select>*/}
-          {/*</div>*/}
-          <button className={"modalSubmitButton"}>Salvesta</button>
+                <div className={"modalTitle"}>Kasutaja andmete muutmine</div>
+                <div className={"modalForm"}>
+                    <div className={"inputDiv"}>
+                        <div className={"title"}>Nimi</div>
+                        <input placeholder={"Nimi"} value={userData.name}/>
+                    </div>
+                    <div className={"selectorDiv"}>
+                        <div className={"title"}>Osaleb projektis</div>
+                        <select name="projects" id="projects-select">
+                            <option value="">Vali projekt</option>
+                            <option value="dog">Dog</option>
+                            <option value="cat">Cat</option>
+                        </select>
+                    </div>
+                    <div className={"selectorDiv"}>
+                        <div className={"title"}>Roll</div>
+                        <select name="projects" id="roll-select" value={userData.role.toLowerCase()}>
+                            <option value="admin">Admin</option>
+                            <option value="member">Member</option>
+                        </select>
+                    </div>
+                    <button className={"modalSubmitButton"}>Salvesta</button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    )
 }
 
-export default EditUserModal;
+export default EditUserModal

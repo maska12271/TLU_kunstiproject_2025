@@ -28,3 +28,29 @@ body {
   width: fit-content;
   cursor: pointer;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+    backdrop-filter: blur(0);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    backdrop-filter: blur(2px);
+  }
+}
+
+@keyframes fadeOutBlur {
+  from {
+    opacity: 1;
+    filter: blur(0);
+    backdrop-filter: blur(2px);
+  }
+  to {
+    opacity: 0;
+    filter: blur(5px);
+    backdrop-filter: blur(0);
+  }
+}
