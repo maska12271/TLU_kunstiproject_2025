@@ -42,6 +42,12 @@ export default function App() {
       links: [
         httpBatchLink({
           url: "http://localhost:2022",
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: "include",
+            });
+          },
         }),
       ],
     }),

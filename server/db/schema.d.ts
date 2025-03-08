@@ -32,7 +32,7 @@ export type User = {
    * @kyselyType("Member" | "Admin" | "SuperAdmin")
    */
   role: "Member" | "Admin" | "SuperAdmin";
-  projectId: string;
+  projectId: string | null;
 };
 export type DB = {
   Post: Post;

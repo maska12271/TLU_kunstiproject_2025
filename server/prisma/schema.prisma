@@ -21,8 +21,8 @@ model User {
 
   posts     Post[]
   sessions  Session[]
-  Project   Project   @relation(fields: [projectId], references: [id])
-  projectId String
+  Project   Project?  @relation(fields: [projectId], references: [id])
+  projectId String?
 }
 
 model Post {

@@ -5,7 +5,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 
 export const userRouter = router({
-  getById: adminProcedure
+  getById: publicProcedure
     .input(
       z.object({
         id: z.string(),
@@ -36,7 +36,7 @@ export const userRouter = router({
         postsCount: result?.count || 0,
       };
     }),
-  getList: adminProcedure
+  getList: publicProcedure
     .input(
       z.object({
         pageNo: z.number().positive().default(1),
@@ -52,15 +52,15 @@ export const userRouter = router({
         .limit(input.perPage)
         .execute();
     }),
-  create: adminProcedure
+  create: publicProcedure
     .input(
       z.object({
         name: z.string(),
         isAdmin: z.boolean(),
-        projectId: z.string(),
+        projectId: z.string().optional(),
       }),
     )
-    .query(async ({ input }) => {
+    .mutation(async ({ input }) => {
       // TODO: probably shoud add check if project exists
       return await db
         .insertInto("User")
@@ -70,12 +70,12 @@ export const userRouter = router({
           name: input.name,
           role: input.isAdmin ? "Admin" : "Member",
           password: generateIdFromEntropySize(5),
-          projectId: input.projectId,
+          projectId: input.projectId || undefined,
         })
         .returningAll()
         .execute();
     }),
-  delete: adminProcedure
+  delete: publicProcedure
     .input(
       z.object({
         id: z.string(),
