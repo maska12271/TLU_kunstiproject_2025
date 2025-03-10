@@ -3,6 +3,7 @@ import { db } from "../../db";
 import { router, publicProcedure, adminProcedure } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+import { DB } from "../../db/schema";
 
 export const userRouter = router({
   getById: publicProcedure
@@ -47,7 +48,7 @@ export const userRouter = router({
       const offset = (input.pageNo - 1) * input.perPage;
       return await db
         .selectFrom("User")
-        .selectAll()
+        .select(["id", "name", "username", "role", "projectId"])
         .offset(offset)
         .limit(input.perPage)
         .execute();
@@ -72,8 +73,28 @@ export const userRouter = router({
           password: generateIdFromEntropySize(5),
           projectId: input.projectId || undefined,
         })
-        .returningAll()
+        .returning(["id", "name", "username", "role", "projectId"])
         .execute();
+    }),
+  update: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string().optional(),
+        role: z.custom<DB["User"]["role"]>().optional(),
+        projectId: z.string().optional(),
+        username: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const result = await db
+        .updateTable("User")
+        .where("id", "=", input.id)
+        .set(input)
+        .returning(["id", "name", "username", "role", "projectId"])
+        .executeTakeFirst();
+
+      return result;
     }),
   delete: publicProcedure
     .input(
