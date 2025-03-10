@@ -35,9 +35,10 @@ model Post {
 }
 
 model Project {
-  id     String @id
-  name   String
-  admins User[]
+  id       String  @id
+  name     String
+  isActive Boolean
+  admins   User[]
 }
 
 model Session {

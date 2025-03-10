@@ -15,6 +15,7 @@ export type Post = {
 export type Project = {
   id: string;
   name: string;
+  isActive: number;
 };
 export type Session = {
   id: string;
