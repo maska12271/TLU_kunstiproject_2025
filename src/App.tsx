@@ -10,6 +10,10 @@ import LoginPage from "./Pages/LoginPage.jsx";
 import UnexcitingPage from "./Pages/UnexcitingPage.jsx";
 import MainLayout from "./Pages/MainLayout.jsx";
 
+//change later
+import TestPageToLogin from "./Pages/TestPageToLogin.jsx";
+import AdminPanelPage from "./Pages/AdminPanelPage";
+
 function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
@@ -58,7 +62,8 @@ export default function App() {
         <BrowserRouter basename={"/TLU_kunstiproject_2025"}>
           <Routes>
             <Route path="/" element={<MainLayout />}>
-              {/*<Route index element={<Home />}/>*/}
+              <Route index element={<TestPageToLogin />} />
+              <Route path="/admin" element={<AdminPanelPage />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registration" element={<RegistrationPage />} />

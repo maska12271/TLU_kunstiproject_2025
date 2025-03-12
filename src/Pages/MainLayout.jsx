@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import "../CSSFiles/MainLayout.scss";
 import AdminPanelPage from "./AdminPanelPage.jsx";
 import React from "react";
@@ -51,7 +51,7 @@ function MainLayout() {
                         <div className={"text"}>Minu kasutaja</div>
                     </Link>
                 </div>
-                <AdminPanelPage/>
+                <Outlet/>
             </div>
         </div>
     )

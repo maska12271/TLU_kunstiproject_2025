@@ -1,10 +1,33 @@
 import { Link } from "react-router-dom";
 import "../CSSFiles/Authorization.scss";
 import { useState } from "react";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import {useTRPC} from "../utils/trpc.js";
 
 function LoginPage() {
+  const trpc = useTRPC();
    
-  const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [username, setUsername] = useState('');
+  const [pass, setPass] = useState('');
+
+  const loginMutation = useMutation(trpc.user.login.mutationOptions(
+      {
+        onSuccess: (data) => {
+          console.log(data)
+          window.location.href = '/admin'
+        },
+        onError: (err) => {
+          console.log(err);
+        }
+      }
+  ));
+
+  const handleLogin = () => {
+    loginMutation.mutate({
+      username: username,
+      password: pass
+    });
+  };
 
   return (
     <div className={"authorizationPage"}>
@@ -16,14 +39,14 @@ function LoginPage() {
         <div className={"cardTitle"}>Sisse logimine</div>
         <div className={"cardForm"}>
           <div className={"inputDiv"}>
-            <div className={"title"}>Email</div>
-            <input placeholder={"Email"} />
+            <div className={"title"}>Username</div>
+            <input placeholder={"Username"} onChange={(e) => setUsername(e.target.value)} />
           </div>
           <div className={"inputDiv"}>
             <div className={"title"}>Password</div>
-            <input type={"password"} placeholder={"Password"} />
+            <input type={"password"} placeholder={"Password"}  onChange={(e) => setPass(e.target.value)} />
           </div>
-          <button className={"modalSubmitButton"}>Lisa kasutaja</button>
+          <button className={"modalSubmitButton"} onClick={() => handleLogin()}>Login</button>
           <Link to={"/registration"} className={"link"}>
             Registreeru
           </Link>

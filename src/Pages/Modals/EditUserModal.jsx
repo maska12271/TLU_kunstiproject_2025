@@ -78,10 +78,13 @@ function EditUserModal({ setShowEditUserModal, initialUserData, allProjects }) {
                     </div>
                     <div className={"selectorDiv"}>
                         <div className={"title"}>Osaleb projektis</div>
-                        <select name="projects" id="projects-select">
+                        <select name="projects" id="projects-select" value={userProjectId && userProjectId}>
                             <option value="">Vali projekt</option>
-                            <option value="dog">Dog</option>
-                            <option value="cat">Cat</option>
+                            {allProjects.map((project) => {
+                                return (
+                                    <option value={project.id}>{project.name}</option>
+                                )
+                            })}
                         </select>
                     </div>
                     <div className={"selectorDiv"}>

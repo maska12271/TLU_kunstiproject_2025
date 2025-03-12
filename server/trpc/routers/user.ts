@@ -1,6 +1,11 @@
 import { generateIdFromEntropySize } from "lucia";
 import { db } from "../../db";
-import { router, adminProcedure, authedProcedure } from "../trpc";
+import {
+  router,
+  adminProcedure,
+  authedProcedure,
+  publicProcedure,
+} from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { DB } from "../../db/schema";
@@ -55,7 +60,7 @@ export const userRouter = router({
         .limit(input.perPage)
         .execute();
     }),
-  create: adminProcedure
+  create: publicProcedure
     .input(
       z.object({
         name: z.string(),
@@ -115,7 +120,7 @@ export const userRouter = router({
       }
       return;
     }),
-  login: adminProcedure
+  login: publicProcedure
     .input(
       z.object({
         username: z.string(),
@@ -133,7 +138,7 @@ export const userRouter = router({
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      if (user.password !== bcrypt.hashSync(input.password, user.salt)) {
+      if (user.password !== input.password) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
 

@@ -21,11 +21,18 @@ function AdminPanelPage() {
     const [openedEditUserData, setOpenedEditUserData] = useState({})
     const [allUsers, setAllUsers] = useState([])
     const [allProjects, setAllProjects] = useState([])
+    const [activeProject, setActiveProject] = useState(null)
 
     const [usersTablePage, setUsersTablePage] = useState(1)
     const [projectsRequestPage, setProjectsRequestPage] = useState(1)
 
     const [newPostMainImage, setNewPostMainImage] = useState("")
+
+    const [visibleUsernames, setVisibleUsernames] = useState([]);
+
+    const handleShowUsername = (index) => {
+        setVisibleUsernames((prev) => [...prev, index]);
+    };
 
     const deleteUserMutation = useMutation(trpc.user.delete.mutationOptions(
         {
@@ -110,6 +117,8 @@ function AdminPanelPage() {
                       <tbody>
                       {allUsers && allUsers.length > 0 && allUsers.map((user, i) => {
                           console.log(user)
+                          const isUsernameVisible = visibleUsernames.includes(user.id);
+
                           return (
                               <tr key={i}>
                                   <td>{user.name}</td>
@@ -120,7 +129,10 @@ function AdminPanelPage() {
                                           {user.projectId && allProjects.find((project) => project.id == user.projectId)?.name}
                                       </div>
                                   </td>
-                                  <td className={"showNickname"}>{user.username}</td>
+                                  <td className={`showNickname ${isUsernameVisible ? "visible" : "hidden"}`}
+                                      onClick={() => handleShowUsername(user.id)}>
+                                      {isUsernameVisible ? user.username : "Näita kasutajanime"}
+                                  </td>
                                   <td className={"showPass"}>{user.password}</td>
                                   <td className={"actions"}>
                                       <svg onClick={() => openEditUserModal(user)} width="16" height="16"
@@ -158,9 +170,12 @@ function AdminPanelPage() {
                   <div className={"text"}>Lisa postitus</div>
               </button>
               <div className={"postsTabsLinks"}>
-                  <div className={"postsTabsLink active"}>Kõik postitused</div>
-                  <div className={"postsTabsLink"}>Projekt1</div>
-                  <div className={"postsTabsLink"}>Projekt2</div>
+                  <div className={`postsTabsLink ${activeProject == null && "active"}`} onClick={() => {setActiveProject(null)}}>Kõik postitused</div>
+                  {allProjects && allProjects.length > 0 && allProjects.map((project, i) => {
+                      return (
+                          <div className={`postsTabsLink ${activeProject === project.id && "active"}`} id={project.id} key={i} onClick={() => {setActiveProject(project.id)}}>{project.name}</div>
+                      )
+                  })}
               </div>
               <div className="postsBody">
                   <div className={"postDiv"}>

@@ -48,6 +48,21 @@
           padding: 12px 0 12px 12px;
           font-size: 16px;
           font-weight: 400;
+
+          &.showNickname {
+            transition: all 0.3s ease;
+
+            &.hidden {
+              opacity: 0.7;
+              text-decoration: underline;
+            }
+
+            &.visible {
+              opacity: 1;
+              text-decoration: none;
+              cursor: initial;
+            }
+          }
         }
 
         .actions {
@@ -76,6 +91,7 @@
         font-size: 14px;
         font-weight: 400;
         cursor: pointer;
+        transition: all 150ms;
 
         &.active {
           font-weight: 600;
