@@ -140,7 +140,7 @@ export const userRouter = router({
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      if (user.password !== input.password) {
+      if (user.password !== hashSync(input.password, user.salt)) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
 
