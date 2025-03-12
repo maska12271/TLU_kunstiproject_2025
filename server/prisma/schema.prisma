@@ -38,6 +38,7 @@ model Post {
 model Project {
   id       String  @id
   name     String
+  /// @kyselyType(boolean)
   isActive Boolean
   admins   User[]
 }

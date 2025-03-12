@@ -15,7 +15,10 @@ export type Post = {
 export type Project = {
   id: string;
   name: string;
-  isActive: number;
+  /**
+   * @kyselyType(boolean)
+   */
+  isActive: boolean;
 };
 export type Session = {
   id: string;
