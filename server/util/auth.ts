@@ -1,10 +1,10 @@
 import type { Selectable } from "kysely";
 import { Lucia } from "lucia";
-import { LibSQLAdapter } from "@lucia-auth/adapter-sqlite";
+import { BetterSqlite3Adapter } from "@lucia-auth/adapter-sqlite";
 import type { DB } from "../db/schema";
 import { sqlite } from "../db";
 
-const adapter = new LibSQLAdapter(sqlite, {
+const adapter = new BetterSqlite3Adapter(sqlite, {
   user: "User",
   session: "Session",
 });

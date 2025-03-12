@@ -1,9 +1,9 @@
 import { db } from "../../db";
-import { router, adminProcedure, publicProcedure } from "../trpc";
+import { router, adminProcedure } from "../trpc";
 import { z } from "zod";
 
 export const projectRouter = router({
-  getList: publicProcedure
+  getList: adminProcedure
     .input(
       z.object({
         pageNo: z.number().positive().default(1),

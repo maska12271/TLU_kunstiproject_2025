@@ -55,10 +55,3 @@ app.use(
 );
 
 app.listen(2022);
-
-declare module "express-serve-static-core" {
-  interface Request {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    locals?: Record<string, any>;
-  }
-}

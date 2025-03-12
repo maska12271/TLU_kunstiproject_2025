@@ -9,8 +9,8 @@ export const createContext = async ({
   res: Response;
 }) => {
   return {
-    user: req.locals?.user || null,
-    session: req.locals?.session || null,
+    user: res.locals?.user || null,
+    session: res.locals?.session || null,
     req,
     res,
   };
@@ -25,7 +25,6 @@ export const publicProcedure = t.procedure;
 
 export const authedProcedure = t.procedure.use(async function isAuthed(opts) {
   const { ctx } = opts;
-
   if (!ctx.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
@@ -44,7 +43,7 @@ export const adminProcedure = t.procedure.use(async function isAuthed(opts) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
-  if (ctx.user.role !== "Admin" || ctx.user.role !== "SuperAdmin") {
+  if (ctx.user.role !== "Admin" && ctx.user.role !== "SuperAdmin") {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 

@@ -9,8 +9,8 @@ import {
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { DB } from "../../db/schema";
-import bcrypt from "bcrypt";
-import { lucia } from "../auth";
+import { genSaltSync, hashSync } from "bcrypt";
+import { lucia } from "../../util/auth";
 
 export const userRouter = router({
   getById: adminProcedure
@@ -60,7 +60,7 @@ export const userRouter = router({
         .limit(input.perPage)
         .execute();
     }),
-  create: publicProcedure
+  create: adminProcedure
     .input(
       z.object({
         name: z.string(),
@@ -70,6 +70,8 @@ export const userRouter = router({
     )
     .mutation(async ({ input }) => {
       // TODO: probably shoud add check if project exists
+      const password = generateIdFromEntropySize(10);
+      const salt = genSaltSync(10);
       return await db
         .insertInto("User")
         .values({
@@ -77,8 +79,8 @@ export const userRouter = router({
           username: generateIdFromEntropySize(5),
           name: input.name,
           role: input.isAdmin ? "Admin" : "Member",
-          password: generateIdFromEntropySize(5),
-          salt: bcrypt.genSaltSync(10),
+          password: hashSync(password, salt),
+          salt: salt,
           projectId: input.projectId || undefined,
         })
         .returning(["id", "name", "username", "role", "projectId"])
