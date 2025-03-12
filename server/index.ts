@@ -5,7 +5,10 @@ import cors from "cors";
 import { createContext } from "./trpc/trpc";
 import { lucia } from "./util/auth";
 import cookieParser from "cookie-parser";
+import { initDB } from "./db";
 const app = express();
+
+initDB();
 
 app.use(
   cors({
