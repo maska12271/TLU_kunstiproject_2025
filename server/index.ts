@@ -4,7 +4,7 @@ import { appRouter } from "./trpc/routers/_app";
 import cors from "cors";
 import { createContext } from "./trpc/trpc";
 import { lucia } from "./util/auth";
-import cookieParser, { signedCookie } from "cookie-parser";
+import cookieParser from "cookie-parser";
 const app = express();
 
 app.use(
@@ -27,14 +27,14 @@ app.use(async (req, res, next) => {
   if (session && session.fresh) {
     const sessionCookie = lucia.createSessionCookie(session.id);
     res.cookie(sessionCookie.name, sessionCookie.value, {
-      path: ".",
+      path: "/",
       ...sessionCookie.attributes,
     });
   }
   if (!session) {
     const sessionCookie = lucia.createBlankSessionCookie();
     res.cookie(sessionCookie.name, sessionCookie.value, {
-      path: ".",
+      path: "/",
       ...sessionCookie.attributes,
     });
   }
@@ -52,3 +52,10 @@ app.use(
 );
 
 app.listen(2022);
+
+declare module "express-serve-static-core" {
+  interface Request {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    locals?: Record<string, any>;
+  }
+}

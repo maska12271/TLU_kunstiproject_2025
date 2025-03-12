@@ -29,6 +29,7 @@ export type User = {
   username: string;
   name: string;
   password: string;
+  salt: string;
   /**
    * @kyselyType("Member" | "Admin" | "SuperAdmin")
    */

@@ -1,12 +1,14 @@
 import { generateIdFromEntropySize } from "lucia";
 import { db } from "../../db";
-import { router, publicProcedure, adminProcedure } from "../trpc";
+import { router, adminProcedure, authedProcedure } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { DB } from "../../db/schema";
+import bcrypt from "bcrypt";
+import { lucia } from "../auth";
 
 export const userRouter = router({
-  getById: publicProcedure
+  getById: adminProcedure
     .input(
       z.object({
         id: z.string(),
@@ -37,7 +39,7 @@ export const userRouter = router({
         postsCount: result?.count || 0,
       };
     }),
-  getList: publicProcedure
+  getList: adminProcedure
     .input(
       z.object({
         pageNo: z.number().positive().default(1),
@@ -53,7 +55,7 @@ export const userRouter = router({
         .limit(input.perPage)
         .execute();
     }),
-  create: publicProcedure
+  create: adminProcedure
     .input(
       z.object({
         name: z.string(),
@@ -62,7 +64,7 @@ export const userRouter = router({
       }),
     )
     .mutation(async ({ input }) => {
-      // TODO: probably should add check if project exists
+      // TODO: probably shoud add check if project exists
       return await db
         .insertInto("User")
         .values({
@@ -71,12 +73,13 @@ export const userRouter = router({
           name: input.name,
           role: input.isAdmin ? "Admin" : "Member",
           password: generateIdFromEntropySize(5),
+          salt: bcrypt.genSaltSync(10),
           projectId: input.projectId || undefined,
         })
         .returning(["id", "name", "username", "role", "projectId"])
         .execute();
     }),
-  update: publicProcedure
+  update: adminProcedure
     .input(
       z.object({
         id: z.string(),
@@ -96,7 +99,7 @@ export const userRouter = router({
 
       return result;
     }),
-  delete: publicProcedure
+  delete: adminProcedure
     .input(
       z.object({
         id: z.string(),
@@ -112,4 +115,53 @@ export const userRouter = router({
       }
       return;
     }),
+  login: adminProcedure
+    .input(
+      z.object({
+        username: z.string(),
+        password: z.string(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const user = await db
+        .selectFrom("User")
+        .select(["id", "name", "password", "salt"])
+        .where("username", "=", input.username)
+        .executeTakeFirst();
+
+      if (!user) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      if (user.password !== bcrypt.hashSync(input.password, user.salt)) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+
+      const session = await lucia.createSession(user.id, {
+        token: generateIdFromEntropySize(10),
+        refreshToken: generateIdFromEntropySize(10),
+      });
+
+      const sessionCookie = lucia.createSessionCookie(session.id);
+      ctx.res.cookie(sessionCookie.name, sessionCookie.value, {
+        path: "/",
+        ...sessionCookie.attributes,
+      });
+
+      return {
+        id: user.id,
+        name: user.name,
+      };
+    }),
+  logout: authedProcedure.mutation(async ({ ctx }) => {
+    lucia.invalidateSession(ctx.session.id);
+    const sessionCookie = lucia.createBlankSessionCookie();
+    ctx.res.cookie(sessionCookie.name, sessionCookie.value, {
+      path: "/",
+      ...sessionCookie.attributes,
+    });
+
+    ctx.res.locals.user = null;
+    ctx.res.locals.session = null;
+  }),
 });

@@ -1,9 +1,18 @@
 import { initTRPC, TRPCError } from "@trpc/server";
+import { Request, Response } from "express";
 
-export const createContext = async ({ req, res }) => {
+export const createContext = async ({
+  req,
+  res,
+}: {
+  req: Request;
+  res: Response;
+}) => {
   return {
     user: req.locals?.user || null,
     session: req.locals?.session || null,
+    req,
+    res,
   };
 };
 
