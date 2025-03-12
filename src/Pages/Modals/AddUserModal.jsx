@@ -4,16 +4,17 @@ import '/src/CSSFiles/Modals.scss'
 import {useMutation, useQuery} from "@tanstack/react-query";
 import { useTRPC } from "../../utils/trpc.js";
 import "../../CSSFiles/Modals.scss";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 
-function AddUserModal({ setShowAddUserModal }) {
+function AddUserModal({ setShowAddUserModal, allProjects }) {
     const trpc = useTRPC();
 
     const [closed, setClosed] = useState(false);
     const [name, setName] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
+    const [projectId, setProjectId] = useState(null);
 
-    const userCreation = useMutation(trpc.user.createUser.mutationOptions(
+    const createUserMutation = useMutation(trpc.user.create.mutationOptions(
         {
             onSuccess: (data) => {
                 closeModal();
@@ -24,17 +25,19 @@ function AddUserModal({ setShowAddUserModal }) {
         }
     ));
 
+    const handleCreateUser = () => {
+        createUserMutation.mutate({
+            name: name,
+            isAdmin: isAdmin,
+            projectId: projectId,
+        });
+    };
+
   function closeModal() {
     setClosed(true);
     setTimeout(() => {
       setShowAddUserModal(false);
     }, "300");
-  }
-
-  function saveCustomer() {
-      userCreation.mutate(
-          {name: name, isAdmin: isAdmin}
-      )
   }
 
   return (
@@ -71,20 +74,23 @@ function AddUserModal({ setShowAddUserModal }) {
                 </div>
                 <div className={"selectorDiv"}>
                     <div className={"title"}>Osalus projektis</div>
-                    <select name="projects" id="projects-select" required>
+                    <select name="projects" id="projects-select" required onChange={(e) => setProjectId(e.target.value)} >
                         <option value="">Vali projekt</option>
-                        <option value="dog">Dog</option>
-                        <option value="cat">Cat</option>
+                        {allProjects.map((project) => {
+                            return (
+                                <option value={project.id}>{project.name}</option>
+                            )
+                        })}
                     </select>
                 </div>
-                {/*<div className={"checkboxes"}>*/}
-                {/*    <div className={"checkboxAndTitle"}>*/}
-                {/*        <input type={"checkbox"}/>*/}
-                {/*        <div className={"title"}>Admin</div>*/}
-                {/*    </div>*/}
-                {/*    <div className={"subTitle"}>Lisa kasutaja adminina</div>*/}
-                {/*</div>*/}
-                <button className={"modalSubmitButton"} onClick={() => saveCustomer()}>Lisa kasutaja</button>
+                <div className={"checkboxes"}>
+                    <div className={"checkboxAndTitle"}>
+                        <input type={"checkbox"} value={isAdmin.toString()} onChange={(e) => setIsAdmin(e.target.checked)} />
+                        <div className={"title"}>Admin</div>
+                    </div>
+                    <div className={"subTitle"}>Lisa kasutaja adminina</div>
+                </div>
+                <button className={"modalSubmitButton"} onClick={() => handleCreateUser()}>Lisa kasutaja</button>
             </div>
             <div className={"modalFormFooter"}>Saada saadud info kasutajale</div>
         </div>

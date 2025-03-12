@@ -62,7 +62,7 @@ export const userRouter = router({
       }),
     )
     .mutation(async ({ input }) => {
-      // TODO: probably shoud add check if project exists
+      // TODO: probably should add check if project exists
       return await db
         .insertInto("User")
         .values({

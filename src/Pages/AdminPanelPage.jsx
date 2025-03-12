@@ -7,8 +7,8 @@ import EditUserModal from "./Modals/EditUserModal.jsx";
 import AddPostToProjectModalMainImage from "./Modals/AddPostToProjectModalMainImage.jsx";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {useTRPC} from "../utils/trpc.js";
-import AddPostToProjectModalSecondaryPhotod from "./Modals/AddPostToProjectModalSecondaryImages.jsx";
 import AddPostToProjectModalSecondaryImages from "./Modals/AddPostToProjectModalSecondaryImages.jsx";
+import {data} from "react-router-dom";
 
 function AdminPanelPage() {
     const trpc = useTRPC();
@@ -20,19 +20,57 @@ function AdminPanelPage() {
     const [showAddPostToProjectModalSecondaryImages, setShowAddPostToProjectModalSecondaryImages] = useState(false)
     const [openedEditUserData, setOpenedEditUserData] = useState({})
     const [allUsers, setAllUsers] = useState([])
+    const [allProjects, setAllProjects] = useState([])
+
+    const [usersTablePage, setUsersTablePage] = useState(1)
+    const [projectsRequestPage, setProjectsRequestPage] = useState(1)
 
     const [newPostMainImage, setNewPostMainImage] = useState("")
-    // const [allUsers, setAllUsers] = useState([])
 
-    const { isPending, isError, data, error } = useQuery(trpc.user.getList.queryOptions({}));
+    const deleteUserMutation = useMutation(trpc.user.delete.mutationOptions(
+        {
+            onSuccess: (data) => {},
+            onError: (err) => {
+                console.log(err);
+            }
+        }
+    ));
+
+    const {
+        data: dataProjects,
+        isPending: isPendingProjects,
+        isError: isErrorProjects,
+        error: errorProjects,
+    } = useQuery(trpc.project.getList.queryOptions({ page: projectsRequestPage }));
+
+    const {
+        data: dataUsers,
+        isPending: isPendingUsers,
+        isError: isErrorUsers,
+        error: errorUsers,
+    } = useQuery(trpc.user.getList.queryOptions({ page: usersTablePage }));
 
     useEffect(() => {
-        if (!isPending && !isError) {
-            setAllUsers(data);
-        }else if(isError){
-            console.log(error)
+        if (!isPendingUsers && !isErrorUsers) {
+            setAllUsers(dataUsers);
+        }else if(isErrorUsers){
+            console.log(errorUsers)
         }
-    }, [isPending, isError]);
+    }, [isPendingUsers, isErrorUsers]);
+
+    useEffect(() => {
+        if (!isPendingProjects && !isErrorProjects) {
+            setAllProjects(dataProjects);
+        }else if(isErrorProjects){
+            console.log(errorProjects)
+        }
+    }, [isPendingProjects, isErrorProjects]);
+
+    const handleDeleteUser = (userId) => {
+        deleteUserMutation.mutate({
+            id: userId
+        });
+    };
 
     function openEditUserModal(userData){
         setOpenedEditUserData(userData);
@@ -55,49 +93,56 @@ function AdminPanelPage() {
                   </svg>
                   <div className={"text"}>Lisa kasutaja</div>
               </button>
+
               <div className="usersBody">
                   <table className="usersTable">
                       <thead>
-                          <tr>
-                              <th>Nimi</th>
-                              <th>Roll</th>
-                              <th>Postitusi</th>
-                              <th>Project</th>
-                              <th>Kasutajanimi</th>
-                              <th>Parool</th>
-                              <th>Toimingud</th>
-                          </tr>
+                      <tr>
+                          <th>Nimi</th>
+                          <th>Roll</th>
+                          <th>Postitusi</th>
+                          <th>Project</th>
+                          <th>Kasutajanimi</th>
+                          <th>Parool</th>
+                          <th>Toimingud</th>
+                      </tr>
                       </thead>
                       <tbody>
-                          {allUsers.length > 0 && allUsers.map((user, i) => {
-                              return (
-                                  <tr key={i}>
-                                      <td>{user.name}</td>
-                                      <td>{user.role}</td>
-                                      <td>6</td>
-                                      <td>Lillede project</td>
-                                      <td className={"showNickname"}>{user.username}</td>
-                                      <td className={"showPass"}>{user.password}</td>
-                                      <td className={"actions"}>
-                                          <svg onClick={() => openEditUserModal(user)} width="16" height="16"
-                                               viewBox="0 0 16 16" fill="none"
-                                               xmlns="http://www.w3.org/2000/svg">
-                                              <path
-                                                  d="M7.76172 2.66665H3.09505C2.74143 2.66665 2.40229 2.80713 2.15224 3.05718C1.90219 3.30723 1.76172 3.64637 1.76172 3.99999V13.3333C1.76172 13.6869 1.90219 14.0261 2.15224 14.2761C2.40229 14.5262 2.74143 14.6667 3.09505 14.6667H12.4284C12.782 14.6667 13.1211 14.5262 13.3712 14.2761C13.6212 14.0261 13.7617 13.6869 13.7617 13.3333V8.66665M12.7617 1.66665C13.0269 1.40144 13.3866 1.25244 13.7617 1.25244C14.1368 1.25244 14.4965 1.40144 14.7617 1.66665C15.0269 1.93187 15.1759 2.29158 15.1759 2.66665C15.1759 3.04173 15.0269 3.40144 14.7617 3.66665L8.42838 9.99999L5.76172 10.6667L6.42839 7.99999L12.7617 1.66665Z"
-                                                  stroke="#1E1E1E" stroke-width="1.6" stroke-linecap="round"
-                                                  stroke-linejoin="round"/>
-                                          </svg>
-                                          <svg width="15" height="16" viewBox="0 0 15 16" fill="none"
-                                               xmlns="http://www.w3.org/2000/svg">
-                                              <path
-                                                  d="M1.42871 3.99992H2.76204M2.76204 3.99992H13.4287M2.76204 3.99992L2.76204 13.3333C2.76204 13.6869 2.90252 14.026 3.15257 14.2761C3.40262 14.5261 3.74176 14.6666 4.09538 14.6666H10.762C11.1157 14.6666 11.4548 14.5261 11.7049 14.2761C11.9549 14.026 12.0954 13.6869 12.0954 13.3333V3.99992M4.76204 3.99992V2.66659C4.76204 2.31296 4.90252 1.97382 5.15257 1.72378C5.40262 1.47373 5.74176 1.33325 6.09538 1.33325H8.76204C9.11567 1.33325 9.4548 1.47373 9.70485 1.72378C9.9549 1.97382 10.0954 2.31296 10.0954 2.66659V3.99992M6.09538 7.33325V11.3333M8.76204 7.33325V11.3333"
-                                                  stroke="#1E1E1E" stroke-width="1.6" stroke-linecap="round"
-                                                  stroke-linejoin="round"/>
-                                          </svg>
-                                      </td>
-                                  </tr>
-                              )
-                          })}
+                      {allUsers && allUsers.length > 0 && allUsers.map((user, i) => {
+                          console.log(user)
+                          return (
+                              <tr key={i}>
+                                  <td>{user.name}</td>
+                                  <td>{user.role}</td>
+                                  <td>6</td>
+                                  <td>
+                                      <div>
+                                          {user.projectId && allProjects.find((project) => project.id == user.projectId)?.name}
+                                      </div>
+                                  </td>
+                                  <td className={"showNickname"}>{user.username}</td>
+                                  <td className={"showPass"}>{user.password}</td>
+                                  <td className={"actions"}>
+                                      <svg onClick={() => openEditUserModal(user)} width="16" height="16"
+                                           viewBox="0 0 16 16" fill="none"
+                                           xmlns="http://www.w3.org/2000/svg">
+                                          <path
+                                              d="M7.76172 2.66665H3.09505C2.74143 2.66665 2.40229 2.80713 2.15224 3.05718C1.90219 3.30723 1.76172 3.64637 1.76172 3.99999V13.3333C1.76172 13.6869 1.90219 14.0261 2.15224 14.2761C2.40229 14.5262 2.74143 14.6667 3.09505 14.6667H12.4284C12.782 14.6667 13.1211 14.5262 13.3712 14.2761C13.6212 14.0261 13.7617 13.6869 13.7617 13.3333V8.66665M12.7617 1.66665C13.0269 1.40144 13.3866 1.25244 13.7617 1.25244C14.1368 1.25244 14.4965 1.40144 14.7617 1.66665C15.0269 1.93187 15.1759 2.29158 15.1759 2.66665C15.1759 3.04173 15.0269 3.40144 14.7617 3.66665L8.42838 9.99999L5.76172 10.6667L6.42839 7.99999L12.7617 1.66665Z"
+                                              stroke="#1E1E1E" stroke-width="1.6" stroke-linecap="round"
+                                              stroke-linejoin="round"/>
+                                      </svg>
+                                      <svg onClick={() => handleDeleteUser(user.id.toString())} width="15" height="16"
+                                           viewBox="0 0 15 16" fill="none"
+                                           xmlns="http://www.w3.org/2000/svg">
+                                          <path
+                                              d="M1.42871 3.99992H2.76204M2.76204 3.99992H13.4287M2.76204 3.99992L2.76204 13.3333C2.76204 13.6869 2.90252 14.026 3.15257 14.2761C3.40262 14.5261 3.74176 14.6666 4.09538 14.6666H10.762C11.1157 14.6666 11.4548 14.5261 11.7049 14.2761C11.9549 14.026 12.0954 13.6869 12.0954 13.3333V3.99992M4.76204 3.99992V2.66659C4.76204 2.31296 4.90252 1.97382 5.15257 1.72378C5.40262 1.47373 5.74176 1.33325 6.09538 1.33325H8.76204C9.11567 1.33325 9.4548 1.47373 9.70485 1.72378C9.9549 1.97382 10.0954 2.31296 10.0954 2.66659V3.99992M6.09538 7.33325V11.3333M8.76204 7.33325V11.3333"
+                                              stroke="#1E1E1E" stroke-width="1.6" stroke-linecap="round"
+                                              stroke-linejoin="round"/>
+                                      </svg>
+                                  </td>
+                              </tr>
+                          )
+                      })}
                       </tbody>
                   </table>
               </div>
@@ -275,13 +320,15 @@ function AdminPanelPage() {
           {showAddUserModal &&
               <AddUserModal
                   setShowAddUserModal={setShowAddUserModal}
+                  allProjects={allProjects}
               />
           }
 
           {showEditUserModal &&
               <EditUserModal
                   setShowEditUserModal={setShowEditUserModal}
-                  userData={openedEditUserData}
+                  initialUserData={openedEditUserData}
+                  allProjects={allProjects}
               />
           }
 

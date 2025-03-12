@@ -1,8 +1,15 @@
 import "../../CSSFiles/Modals.scss";
-import { useState } from "react";
+import {useEffect, useState} from "react";
+import {useMutation} from "@tanstack/react-query";
+import {useTRPC} from "../../utils/trpc.js";
 
-function EditUserModal({ setShowEditUserModal, userData }) {
+function EditUserModal({ setShowEditUserModal, initialUserData, allProjects }) {
+    const trpc = useTRPC();
+
     const [closed, setClosed] = useState(false)
+    const [userName, setUserName] = useState('')
+    const [userRole, setUserRole] = useState(null)
+    const [userProjectId, setUserProjectId] = useState('')
 
   function closeModal() {
     setClosed(true);
@@ -10,6 +17,35 @@ function EditUserModal({ setShowEditUserModal, userData }) {
       setShowEditUserModal(false);
     }, "300");
   }
+
+
+    const editUserMutation = useMutation(trpc.user.update.mutationOptions(
+        {
+            onSuccess: (data) => {
+                console.log(data)
+                closeModal();
+            },
+            onError: (err) => {
+                console.log(err);
+            }
+        }
+    ));
+
+    console.log(initialUserData)
+    const handleEditUser = () => {
+        editUserMutation.mutate({
+            id: initialUserData.id,
+            name: userName,
+            isAdmin: userRole == "admin" ? true : false,
+            projectId: userProjectId,
+        });
+    };
+
+    useEffect(() => {
+        setUserName(initialUserData.name)
+        setUserRole(initialUserData.role)
+        setUserProjectId(initialUserData.projectId)
+    }, []);
 
   return (
     <div
@@ -38,7 +74,7 @@ function EditUserModal({ setShowEditUserModal, userData }) {
                 <div className={"modalForm"}>
                     <div className={"inputDiv"}>
                         <div className={"title"}>Nimi</div>
-                        <input placeholder={"Nimi"} value={userData.name}/>
+                        <input placeholder={"Nimi"} value={userName && userName} onChange={(e) => setUserName(e.target.value)} />
                     </div>
                     <div className={"selectorDiv"}>
                         <div className={"title"}>Osaleb projektis</div>
@@ -50,12 +86,12 @@ function EditUserModal({ setShowEditUserModal, userData }) {
                     </div>
                     <div className={"selectorDiv"}>
                         <div className={"title"}>Roll</div>
-                        <select name="projects" id="roll-select" value={userData.role.toLowerCase()}>
+                        <select name="projects" id="roll-select" value={userRole && userRole.toLowerCase()} onChange={(e) => setUserRole(e.target.value)} >
                             <option value="admin">Admin</option>
                             <option value="member">Member</option>
                         </select>
                     </div>
-                    <button className={"modalSubmitButton"}>Salvesta</button>
+                    <button className={"modalSubmitButton"} onClick={() => handleEditUser()}>Salvesta</button>
                 </div>
             </div>
         </div>
