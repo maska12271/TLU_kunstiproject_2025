@@ -9,12 +9,12 @@
   ],
   "scripts": {
     "dev": "vite",
-    "dev:server": "npm run dev --workspace=server",
-    "gen-db:server": "npm run gen-db --workspace=server",
     "build": "vite build",
     "lint": "eslint . --fix",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "server:dev": "npm run dev --workspace=server",
+    "server:gen-db": "npm run gen-db --workspace=server"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.67.1",

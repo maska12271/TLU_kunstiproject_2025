@@ -1,17 +1,10 @@
 import { generateIdFromEntropySize } from "lucia";
 import { db } from "../../db";
-import {
-  router,
-  adminProcedure,
-  authedProcedure,
-  publicProcedure,
-} from "../trpc";
+import { router, adminProcedure } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { DB } from "../../db/schema";
-import { genSaltSync, hashSync } from "bcrypt";
 import { Selectable } from "kysely";
-import { title } from "process";
 
 export const userRouter = router({
   getById: adminProcedure
