@@ -5,12 +5,21 @@ export type Generated<T> =
     : ColumnType<T, T | undefined, T>;
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
+export type Image = {
+  id: string;
+  url: string;
+  alt: string;
+  /**
+   * @kyselyType("Default" | "ZoomIn")
+   */
+  type: Generated<"Default" | "ZoomIn">;
+  postId: string | null;
+};
 export type Post = {
   id: string;
   description: string;
   title: string;
-  imageUrl: string;
-  authorId: string | null;
+  authorId: string;
 };
 export type Project = {
   id: string;
@@ -37,6 +46,7 @@ export type User = {
   projectId: string | null;
 };
 export type DB = {
+  Image: Image;
   Post: Post;
   Project: Project;
   Session: Session;

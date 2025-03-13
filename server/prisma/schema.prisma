@@ -27,12 +27,24 @@ model User {
 }
 
 model Post {
-  id          String  @id
+  id          String   @id
   description String
   title       String
-  imageUrl    String
-  author      User?   @relation(fields: [authorId], references: [id])
-  authorId    String?
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+  images      Image[]
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+}
+
+model Image {
+  id     String  @id
+  url    String
+  alt    String
+  /// @kyselyType("Default" | "ZoomIn")
+  type   String  @default("Default")
+  Post   Post?   @relation(fields: [postId], references: [id])
+  postId String?
 }
 
 model Project {
