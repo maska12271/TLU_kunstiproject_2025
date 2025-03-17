@@ -20,6 +20,8 @@ export type Post = {
   description: string;
   title: string;
   authorId: string;
+  createAt: Generated<string>;
+  updateAt: string;
 };
 export type Project = {
   id: string;

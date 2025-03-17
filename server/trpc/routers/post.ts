@@ -50,7 +50,13 @@ export const userRouter = router({
       const posts = await db
         .selectFrom("Post")
         .innerJoin("User", "Post.authorId", "User.id")
-        .select(["Post.id", "Post.title", "Post.description", "User.name"])
+        .select([
+          "Post.id",
+          "Post.title",
+          "Post.description",
+          "User.name",
+          db.fn.countAll().as("totalRows"),
+        ])
         .offset(offset)
         .limit(input.perPage)
         .execute();

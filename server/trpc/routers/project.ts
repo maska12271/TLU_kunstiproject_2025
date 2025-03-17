@@ -14,7 +14,7 @@ export const projectRouter = router({
       const offset = (input.pageNo - 1) * input.perPage;
       return await db
         .selectFrom("Project")
-        .select(["id", "name", "isActive"])
+        .select(["id", "name", "isActive", db.fn.countAll().as("totalRows")])
         .offset(offset)
         .limit(input.perPage)
         .execute();

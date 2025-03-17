@@ -55,7 +55,14 @@ export const userRouter = router({
       const offset = (input.pageNo - 1) * input.perPage;
       return await db
         .selectFrom("User")
-        .select(["id", "name", "username", "role", "projectId"])
+        .select([
+          "id",
+          "name",
+          "username",
+          "role",
+          "projectId",
+          db.fn.countAll().as("totalRows"),
+        ])
         .offset(offset)
         .limit(input.perPage)
         .execute();
