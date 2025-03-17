@@ -27,11 +27,16 @@ export const userRouter = router({
           "User.id",
           "User.name",
           "User.role",
-          "Project.name",
-          "Project.id",
+          "User.username",
+          "Project.name as projectName",
+          "Project.id as projectId",
         ])
-        .where("id", "=", input.id)
+        .where("User.id", "=", input.id)
         .executeTakeFirst();
+
+      if (user == undefined) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
 
       const result = await db
         .selectFrom("Post")
@@ -91,7 +96,7 @@ export const userRouter = router({
           projectId: input.projectId || undefined,
         })
         .returning(["id", "name", "username", "role", "projectId"])
-        .execute();
+        .executeTakeFirst();
     }),
   update: adminProcedure
     .input(
@@ -127,7 +132,9 @@ export const userRouter = router({
       if (result[0].numDeletedRows == 0n) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
-      return;
+      return {
+        success: true,
+      };
     }),
   login: publicProcedure
     .input(
