@@ -12,11 +12,22 @@ export const projectRouter = router({
     )
     .query(async ({ input }) => {
       const offset = (input.pageNo - 1) * input.perPage;
-      return await db
+
+      const projects = await db
         .selectFrom("Project")
-        .select(["id", "name", "isActive", db.fn.countAll().as("totalRows")])
+        .select(["id", "name", "isActive"])
         .offset(offset)
         .limit(input.perPage)
         .execute();
+
+      const totalRows = await db
+        .selectFrom("User")
+        .select(db.fn.countAll().as("totalRows"))
+        .executeTakeFirstOrThrow();
+
+      return {
+        projects: projects,
+        totalRows: totalRows.totalRows || 0,
+      };
     }),
 });

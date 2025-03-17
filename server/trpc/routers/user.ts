@@ -58,19 +58,23 @@ export const userRouter = router({
     )
     .query(async ({ input }) => {
       const offset = (input.pageNo - 1) * input.perPage;
-      return await db
+
+      const users = await db
         .selectFrom("User")
-        .select([
-          "id",
-          "name",
-          "username",
-          "role",
-          "projectId",
-          db.fn.countAll().as("totalRows"),
-        ])
+        .select(["id", "name", "username", "role", "projectId"])
         .offset(offset)
         .limit(input.perPage)
         .execute();
+
+      const totalRows = await db
+        .selectFrom("User")
+        .select(db.fn.countAll().as("totalRows"))
+        .executeTakeFirstOrThrow();
+
+      return {
+        users: users,
+        totalRows: totalRows.totalRows || 0,
+      };
     }),
   create: adminProcedure
     .input(

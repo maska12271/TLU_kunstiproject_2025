@@ -50,16 +50,15 @@ export const userRouter = router({
       const posts = await db
         .selectFrom("Post")
         .innerJoin("User", "Post.authorId", "User.id")
-        .select([
-          "Post.id",
-          "Post.title",
-          "Post.description",
-          "User.name",
-          db.fn.countAll().as("totalRows"),
-        ])
+        .select(["Post.id", "Post.title", "Post.description", "User.name"])
         .offset(offset)
         .limit(input.perPage)
         .execute();
+
+      const totalRows = await db
+        .selectFrom("Post")
+        .select(db.fn.countAll().as("totalRows"))
+        .executeTakeFirstOrThrow();
 
       if (posts == undefined) {
         return new TRPCError({ code: "NOT_FOUND" });
@@ -90,9 +89,15 @@ export const userRouter = router({
             images: images,
           };
         }
-        return postsWithImages;
+        return {
+          posts: postsWithImages,
+          totalRows: totalRows.totalRows || 0,
+        };
       } else {
-        return posts;
+        return {
+          posts: posts,
+          totalRows: totalRows.totalRows || 0,
+        };
       }
     }),
   create: adminProcedure
@@ -110,6 +115,7 @@ export const userRouter = router({
           title: input.title,
           description: input.description,
           authorId: ctx.user.id,
+          updateAt: new Date().toISOString(),
         })
         .returning(["id", "title", "description"])
         .executeTakeFirst();
