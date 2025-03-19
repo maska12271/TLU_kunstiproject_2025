@@ -91,12 +91,16 @@ export const userRouter = router({
         }
         return {
           posts: postsWithImages,
-          totalRows: totalRows.totalRows || 0,
+          totalPages: Math.ceil(
+            (totalRows.totalRows as number) / input.perPage,
+          ),
         };
       } else {
         return {
           posts: posts,
-          totalRows: totalRows.totalRows || 0,
+          totalPages: Math.ceil(
+            (totalRows.totalRows as number) / input.perPage,
+          ),
         };
       }
     }),

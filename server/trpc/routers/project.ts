@@ -27,7 +27,7 @@ export const projectRouter = router({
 
       return {
         projects: projects,
-        totalRows: totalRows.totalRows || 0,
+        totalPages: Math.ceil((totalRows.totalRows as number) / input.perPage),
       };
     }),
 });

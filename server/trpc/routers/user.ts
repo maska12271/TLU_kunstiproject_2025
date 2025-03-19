@@ -38,15 +38,8 @@ export const userRouter = router({
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      const result = await db
-        .selectFrom("Post")
-        .where("authorId", "=", input.id)
-        .select(({ fn }) => fn.countAll().as("count"))
-        .executeTakeFirst();
-
       return {
         ...user,
-        postsCount: result?.count || 0,
       };
     }),
   getList: adminProcedure
@@ -73,7 +66,7 @@ export const userRouter = router({
 
       return {
         users: users,
-        totalRows: totalRows.totalRows || 0,
+        totalPages: Math.ceil((totalRows.totalRows as number) / input.perPage),
       };
     }),
   create: adminProcedure
