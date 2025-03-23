@@ -53,6 +53,6 @@
     "vite": "^6.2.0"
   },
   "lint-staged": {
-    "**/*": "eslint . --fix"
+    "**/*": "eslint --fix"
   }
 }

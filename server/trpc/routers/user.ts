@@ -8,7 +8,7 @@ import {
 } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { DB } from "../../db/schema";
+import { DB, User } from "../../db/schema";
 import { genSaltSync, hashSync } from "bcrypt";
 import { lucia } from "../../util/auth";
 
@@ -69,6 +69,40 @@ export const userRouter = router({
         totalPages: Math.ceil((totalRows.totalRows as number) / input.perPage),
       };
     }),
+  bulkCreate: adminProcedure
+    .input(
+      z.object({
+        names: z.string().array(),
+        projectId: z.string(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      // TODO: probably shoud add check if project exists
+      const users: (User & { passwordNoHash: string })[] = [];
+      for (const name of input.names) {
+        const password = generateIdFromEntropySize(10);
+        const salt = genSaltSync(10);
+        users.push({
+          id: generateIdFromEntropySize(10),
+          username: generateIdFromEntropySize(5),
+          name: name,
+          role: "Member",
+          passwordNoHash: password,
+          password: hashSync(password, salt),
+          salt: salt,
+          projectId: input.projectId,
+        });
+      }
+      await db.insertInto("User").values(users).execute();
+      return users.map((user) => ({
+        id: user.id,
+        name: user.name,
+        username: user.username,
+        role: user.role,
+        projectId: user.projectId,
+        password: user.passwordNoHash,
+      }));
+    }),
   create: adminProcedure
     .input(
       z.object({
@@ -81,7 +115,7 @@ export const userRouter = router({
       // TODO: probably shoud add check if project exists
       const password = generateIdFromEntropySize(10);
       const salt = genSaltSync(10);
-      return await db
+      const user = await db
         .insertInto("User")
         .values({
           id: generateIdFromEntropySize(10),
@@ -94,6 +128,10 @@ export const userRouter = router({
         })
         .returning(["id", "name", "username", "role", "projectId"])
         .executeTakeFirst();
+      return {
+        ...user,
+        password,
+      };
     }),
   update: adminProcedure
     .input(
